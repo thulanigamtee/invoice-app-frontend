@@ -1,0 +1,31 @@
+<div [formGroup]="clientAddress">
+  <div class="mt-4 flex flex-col gap-y-6">
+    <app-input
+      [label]="'Street'"
+      [type]="'text'"
+      [placeholder]="'Enter street'"
+      [control]="clientAddress.get('street')"
+    />
+    <div class="grid grid-cols-2 gap-4 md:grid-cols-3">
+      <app-input
+        [label]="'City'"
+        [type]="'text'"
+        [placeholder]="'Enter city'"
+        [control]="clientAddress.get('city')"
+      />
+      <app-input
+        [label]="'Post Code'"
+        [type]="'text'"
+        [placeholder]="'Enter post code'"
+        [control]="clientAddress.get('postCode')"
+      />
+      <app-input
+        [label]="'Country'"
+        [type]="'text'"
+        [placeholder]="'Enter country'"
+        [control]="clientAddress.get('country')"
+        class="col-span-2 md:col-span-1"
+      />
+    </div>
+  </div>
+</div>

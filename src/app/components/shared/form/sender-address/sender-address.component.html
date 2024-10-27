@@ -1,0 +1,40 @@
+<div [formGroup]="senderAddress" class="mt-4">
+  <h3
+    class="text-[15px] font-bold capitalize tracking-[-0.25px] text-[#7C5DFA]"
+  >
+    bill from
+  </h3>
+  <div class="mt-4 flex flex-col gap-y-6">
+    <app-input
+      [label]="'street'"
+      [type]="'text'"
+      [id]="'senderStreet'"
+      [placeholder]="'Enter street'"
+      [control]="senderAddress.get('street')"
+    />
+    <div class="grid grid-cols-2 gap-4 md:grid-cols-3">
+      <app-input
+        [label]="'city'"
+        [type]="'text'"
+        [id]="'senderCity'"
+        [placeholder]="'Enter city'"
+        [control]="senderAddress.get('city')"
+      />
+      <app-input
+        [label]="'post code'"
+        [type]="'text'"
+        [id]="'senderPostCode'"
+        [placeholder]="'Enter post code'"
+        [control]="senderAddress.get('postCode')"
+      />
+      <app-input
+        [label]="'country'"
+        [type]="'text'"
+        [id]="'senderCountry'"
+        [placeholder]="'Enter country'"
+        [control]="senderAddress.get('country')"
+        class="col-span-2 md:col-span-1"
+      />
+    </div>
+  </div>
+</div>

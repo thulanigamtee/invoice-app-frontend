@@ -1,0 +1,17 @@
+// dark theme
+:root {
+  --background: hsl(233, 30%, 11%); // 12
+  --itemsBgPrimary: hsl(233, 31%, 17%); // 03
+  --itemsBgSecondary: hsl(228, 29%, 7%); // 08
+  --btnBgPrimary: hsl(233, 30%, 21%); // 04
+  --btnBgSecondary: #373b53;
+  --purplePrimary: hsl(252, 94%, 67%); // 01
+  --purpleSecondary: hsl(252, 100%, 73%); // 02
+  --redPrimary: hsl(0, 80%, 63%); // 09
+  --redSecondary: hsl(0, 100%, 80%); // 10
+}
+
+// light theme
+// :root {
+//   --bg: hsl(240, 27%, 98%); // 11
+// }

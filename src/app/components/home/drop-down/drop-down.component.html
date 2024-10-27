@@ -1,0 +1,35 @@
+<div
+  aria-label="drop-down-menu"
+  class="flex justify-center"
+  OutsideClick
+  (outsideClick)="outsideClick()"
+>
+  <button
+    (click)="toggleDropDown()"
+    class="flex items-center justify-between gap-x-4"
+  >
+    <p class="whitespace-nowrap font-bold">
+      {{ placeholder }}
+    </p>
+    <img src="/assets/icon-arrow-down.svg" alt="icon-arrow-down" />
+  </button>
+  <ul
+    [class.active]="isActive"
+    class="drop-down absolute mt-10 h-[120px] w-[130px] rounded-xl bg-btnBgPrimary p-4 md:h-[128px] md:w-[192px] md:px-6 md:py-4"
+  >
+    @for (option of options; track $index) {
+      <li class="flex items-center gap-x-4" (click)="updateStatus(option.id)">
+        <button
+          class="bg-itemsPrimary h-[16px] w-[16px] rounded-[2px] border-[1px] border-[#7C5DFA]"
+          [ngClass]="{
+            'border-purplePrimary bg-purplePrimary bg-[url(/assets/icon-check.svg)] bg-center bg-no-repeat':
+              option.checked,
+          }"
+        ></button>
+        <p class="capitalize">
+          {{ option.value }}
+        </p>
+      </li>
+    }
+  </ul>
+</div>

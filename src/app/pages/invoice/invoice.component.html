@@ -1,0 +1,36 @@
+<main class="lg:ml-[103px]">
+  <section
+    class="my-7 flex items-center gap-x-5 px-[5%] md:mt-12 lg:mx-auto lg:w-[730px] lg:px-0"
+  >
+    <button
+      class="h-4 w-4 bg-[url('/assets/icon-arrow-left.svg')] bg-center bg-no-repeat"
+    ></button>
+    <p class="font-bold">Go back</p>
+  </section>
+  @for (invoice of invoices; track invoice.id) {
+    <section class="px-[5%] lg:mx-auto lg:w-[730px] lg:px-0">
+      <div
+        class="flex h-[91px] items-center justify-between rounded-xl bg-itemsBgPrimary px-6 md:h-[88px] md:px-8"
+      >
+        <div
+          class="flex w-full items-center justify-between md:w-auto md:gap-x-6"
+        >
+          <p class="text-[13px] font-medium">Status</p>
+          <app-status-indicator [status]="invoice.status" />
+        </div>
+        <app-action-buttons
+          [isPending]="invoice.status === 'pending' ? true : false"
+          class="hidden md:block"
+        />
+      </div>
+      <div class="rounded-xl bg-itemsBgPrimary">
+        <app-invoice-info [invoice]="invoice" />
+      </div>
+    </section>
+    <section class="mt-16 bg-itemsBgPrimary px-[5%] py-6 md:hidden">
+      <app-action-buttons
+        [isPending]="invoice.status === 'pending' ? true : false"
+      />
+    </section>
+  }
+</main>

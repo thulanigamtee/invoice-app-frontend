@@ -1,0 +1,111 @@
+@use "./app/partials/" as *;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: var(--background);
+}
+
+p,
+span,
+address,
+label,
+input,
+h1,
+h2,
+h3,
+h3,
+h5 {
+  font-family: $leagueSpartan;
+  font-optical-sizing: auto;
+  font-style: normal;
+  color: white;
+}
+
+h1 {
+  font-size: $fontLg;
+  letter-spacing: $SpacingSm;
+  font-weight: bold;
+  @media (min-width: 768px) {
+    font-size: $fontXl;
+  }
+}
+
+p {
+  font-size: $fontMd;
+  font-weight: bold;
+  @media (min-width: 768px) {
+    font-size: 17px;
+  }
+}
+
+span,
+label {
+  font-size: $fontXs;
+  letter-spacing: $SpacingLg;
+  font-weight: 400;
+  color: #dfe3fa;
+  @media (min-width: 768px) {
+    font-size: 15px;
+  }
+}
+
+address {
+  font-size: $fontXs;
+  color: #dfe3fa;
+  @media (min-width: 768px) {
+    font-size: 15px;
+  }
+}
+
+input {
+  font-family: $leagueSpartan;
+  letter-spacing: $SpacingMd;
+  &::placeholder {
+    color: #888eb0;
+    font-weight: normal;
+  }
+}
+
+.drop-down {
+  display: none;
+  opacity: 0;
+  transition-property: display opacity;
+  transition-duration: 0.3s;
+  transition-behavior: allow-discrete;
+  translate: 0 10px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  &.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    opacity: 1;
+    translate: 0 0;
+    @starting-style {
+      opacity: 0;
+      translate: 0 -10px;
+    }
+  }
+}
+
+.form {
+  display: none;
+  opacity: 0;
+  transition-property: display opacity;
+  transition-duration: 0.5s;
+  transition-behavior: allow-discrete;
+  translate: -10px 0;
+  &.active {
+    display: block;
+    opacity: 1;
+    translate: 0 0;
+    @starting-style {
+      opacity: 0;
+      translate: -10px 0;
+    }
+  }
+}

@@ -1,0 +1,96 @@
+<section
+  [class.active]="formState()"
+  class="left form absolute top-[4.5rem] z-10 w-full max-w-[600px] rounded-e-xl bg-[#141625] md:top-[5rem] md:w-[80%] md:max-w-[720px] lg:top-0"
+>
+  <div class="mb-5 ml-[5%] mt-7 flex items-center gap-x-3">
+    <button
+      class="h-3 w-2 bg-[url('/assets/icon-arrow-left.svg')] bg-no-repeat"
+    ></button>
+    <p class="font-bold">Go back</p>
+  </div>
+  <h1 class="ml-[5%] capitalize">new invoice</h1>
+  <form [formGroup]="invoiceForm">
+    <section class="px-[5%]">
+      <app-sender-address [senderAddress]="invoiceForm.get('senderAddress')" />
+      <h3
+        class="font-leagueSpartan mt-10 text-[15px] font-bold capitalize text-purplePrimary"
+      >
+        bill to
+      </h3>
+      <div class="mt-4 flex flex-col gap-y-5">
+        <app-input
+          [label]="'client\'s name'"
+          [type]="'text'"
+          [control]="invoiceForm.get('clientName')"
+          [placeholder]="'Enter client name'"
+        />
+        <app-input
+          [label]="'client\'s email'"
+          [type]="'text'"
+          [control]="invoiceForm.get('clientEmail')"
+          [placeholder]="'Enter client email'"
+        />
+      </div>
+      <app-client-address [clientAddress]="invoiceForm.get('clientAddress')" />
+      <div class="mt-8 grid gap-6 md:grid-cols-2">
+        <app-input
+          [label]="'invoice date'"
+          [type]="'date'"
+          [control]="invoiceForm.get('paymentDue')"
+          [placeholder]="'Enter date'"
+        />
+        <div
+          class="flex flex-col"
+          OutsideClick
+          (outsideClick)="isActive = false"
+        >
+          <span class="text-[#888EB0]">Payment Terms</span>
+          <button
+            (click)="toggleDropdown()"
+            class="flex h-12 items-center justify-between rounded-lg bg-itemsBgPrimary px-6"
+          >
+            <p>Net 30 Days</p>
+            <img src="/assets/icon-arrow-down.svg" alt="icon-arrow-down" />
+          </button>
+          <ul
+            class="drop-down absolute mt-20 rounded-lg bg-itemsBgPrimary"
+            [class.active]="isActive"
+          >
+            @for (option of options; track $index) {
+              <li class="border-b-[1px] border-[#1E2139] px-6 py-3">
+                <p class="capitalize">{{ option.value }}</p>
+              </li>
+            }
+          </ul>
+        </div>
+        <app-input
+          [label]="'project description'"
+          [type]="'text'"
+          [control]="invoiceForm.get('description')"
+          [placeholder]="'Enter description'"
+          class="md:col-span-2"
+        />
+      </div>
+      <app-items [items]="invoiceForm.get('items')"></app-items>
+    </section>
+    <section
+      class="mt-20 flex justify-between bg-itemsBgPrimary px-[5%] py-5 md:bg-transparent"
+    >
+      <app-button
+        [text]="'Discard'"
+        class="rounded-full bg-btnBgPrimary px-2"
+        (click)="hideForm()"
+      />
+      <div class="flex gap-x-2">
+        <app-button
+          [text]="'Save as Draft'"
+          class="rounded-full bg-[#373B53] px-2"
+        />
+        <app-button
+          [text]="'Save & Send'"
+          class="rounded-full bg-purplePrimary px-2"
+        />
+      </div>
+    </section>
+  </form>
+</section>

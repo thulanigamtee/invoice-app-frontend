@@ -1,0 +1,26 @@
+<main class="my-8 md:my-[60px] lg:ml-[103px]">
+  <app-form />
+  <div
+    class="flex h-[44px] items-center justify-between px-[5%] lg:mx-auto lg:w-[730px] lg:px-0"
+  >
+    <section>
+      <h1 class="uppercase">invoices</h1>
+      <span>{{ invoiceTotal }}</span>
+    </section>
+    <section class="flex items-center gap-x-4 md:gap-x-10">
+      <app-drop-down></app-drop-down>
+      <app-button
+        [text]="btnText"
+        [isNewInvoiceBtn]="true"
+        class="rounded-full bg-purplePrimary pr-1"
+        (click)="showForm()"
+      >
+        <span
+          class="grid h-8 w-8 items-center rounded-full bg-white bg-[url('/assets/icon-plus.svg')] bg-center bg-no-repeat"
+        >
+        </span>
+      </app-button>
+    </section>
+  </div>
+  <app-invoice-item />
+</main>

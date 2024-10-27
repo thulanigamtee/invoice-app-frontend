@@ -1,0 +1,46 @@
+<div [formGroup]="items.parent" class="mt-12">
+  <div formArrayName="items">
+    <h3 class="text-[18px] font-bold text-[#777F98]">Item List</h3>
+    @for (item of items.controls; track $index) {
+      <div class="mt-6 flex flex-wrap items-end justify-between gap-4">
+        <app-input
+          [label]="'item name'"
+          [type]="'text'"
+          [placeholder]="'Item name'"
+          [control]="item.get('name')"
+          class="w-[100%] md:w-[40%]"
+        />
+        <app-input
+          [label]="'qty.'"
+          [type]="'number'"
+          [placeholder]="'Quantity'"
+          [control]="item.get('quantity')"
+          class="w-[20%] md:w-[10%]"
+        />
+        <app-input
+          [label]="'Price'"
+          [type]="'number'"
+          [placeholder]="'Price'"
+          [control]="item.get('price')"
+          class="w-[35%] md:w-[15%]"
+        />
+        <app-input
+          [label]="'Total'"
+          [type]="'number'"
+          [placeholder]="'Total'"
+          [control]="item.get('total')"
+          class="w-[25%] md:w-[15%]"
+        />
+        <app-button
+          [text]="''"
+          class="bg-[url('/assets/icon-delete.svg')] bg-center bg-no-repeat"
+        />
+      </div>
+    }
+    <app-button
+      [text]="'+ Add New Item'"
+      [isNewInvoiceBtn]="false"
+      class="mt-10 block w-full rounded-full bg-btnBgPrimary"
+    />
+  </div>
+</div>

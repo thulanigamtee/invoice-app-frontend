@@ -1,0 +1,78 @@
+<div class="mt-4 p-6 md:mb-10 md:p-8">
+  <div class="md:flex md:justify-between">
+    <div>
+      <p>
+        <span class="text-lighterPurple text-[15px] font-bold">#</span
+        >{{ invoice.id }}
+      </p>
+      <span>{{ invoice.description }}</span>
+    </div>
+    <address class="my-6 md:my-0 md:text-end">
+      {{ invoice.senderAddress.street }}<br />
+      {{ invoice.senderAddress.city }}<br />
+      {{ invoice.senderAddress.postCode }}<br />
+      {{ invoice.senderAddress.country }}
+    </address>
+  </div>
+  <article class="grid-cols-2 md:grid md:w-full">
+    <div class="grid grid-cols-2">
+      <div class="flex flex-col justify-between">
+        <div>
+          <span>Invoice Date</span>
+          <p>{{ invoice.createdAt | date: "d MMM y" }}</p>
+        </div>
+        <div>
+          <span>Payment Due</span>
+          <p>{{ invoice.paymentDue | date: "d MMM y" }}</p>
+        </div>
+      </div>
+      <div>
+        <span class="capitalize">bill to</span>
+        <p>{{ invoice.clientName }}</p>
+        <address>
+          {{ invoice.clientAddress.street }}<br />
+          {{ invoice.clientAddress.city }}<br />
+          {{ invoice.clientAddress.postCode }}<br />
+          {{ invoice.clientAddress.country }}
+        </address>
+      </div>
+    </div>
+    <div class="my-6 md:my-0">
+      <span>Sent to</span>
+      <p>{{ invoice.clientEmail }}</p>
+    </div>
+  </article>
+  <div>
+    <ul class="flex flex-col gap-y-4 rounded-t-xl bg-btnBgPrimary p-6 md:mt-10">
+      <div class="hidden md:grid md:grid-cols-4">
+        <span class="font-medium capitalize">item name</span>
+        <span class="text-center font-medium uppercase">qty.</span>
+        <span class="text-end font-medium capitalize">price</span>
+        <span class="text-end font-medium capitalize">total</span>
+      </div>
+      @for (item of invoice.items; track item.id) {
+        <li class="flex items-center justify-between md:hidden">
+          <div>
+            <p>{{ item.name }}</p>
+            <p class="text-[#888EB0]">
+              {{ item.quantity }} x {{ item.price | currency: "R " }}
+            </p>
+          </div>
+          <p>{{ item.total | currency: "R " }}</p>
+        </li>
+        <li class="hidden md:grid md:grid-cols-4">
+          <p>{{ item.name }}</p>
+          <p class="text-center">{{ item.quantity }}</p>
+          <p class="text-end">{{ item.price | currency: "R " }}</p>
+          <p class="text-end">{{ item.total | currency: "R " }}</p>
+        </li>
+      }
+    </ul>
+    <div
+      class="flex items-center justify-between rounded-b-xl bg-[#0C0E16] p-6"
+    >
+      <span class="font-medium capitalize text-white">amount due</span>
+      <p class="text-2xl">{{ invoice.total | currency: "R  " }}</p>
+    </div>
+  </div>
+</div>
