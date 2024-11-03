@@ -2,10 +2,8 @@
   <section
     class="my-7 flex items-center gap-x-5 px-[5%] md:mt-12 lg:mx-auto lg:w-[730px] lg:px-0"
   >
-    <button
-      class="h-4 w-4 bg-[url('/assets/icon-arrow-left.svg')] bg-center bg-no-repeat"
-    ></button>
-    <p class="font-bold">Go back</p>
+    <a class="h-3 w-2 bg-[url('/assets/icon-arrow-left.svg')] bg-no-repeat"></a>
+    <p class="font-bold capitalize">go back</p>
   </section>
   @for (invoice of invoices; track invoice.id) {
     <section class="px-[5%] lg:mx-auto lg:w-[730px] lg:px-0">
@@ -15,9 +13,10 @@
         <div
           class="flex w-full items-center justify-between md:w-auto md:gap-x-6"
         >
-          <p class="text-[13px] font-medium">Status</p>
+          <p class="text-[13px] font-medium capitalize">status</p>
           <app-status-indicator [status]="invoice.status" />
         </div>
+        <!-- tablet/desktop action buttons -->
         <app-action-buttons
           [isPending]="invoice.status === 'pending' ? true : false"
           class="hidden md:block"
@@ -28,9 +27,11 @@
       </div>
     </section>
     <section class="mt-16 bg-itemsBgPrimary px-[5%] py-6 md:hidden">
+      <!-- mobile action buttons -->
       <app-action-buttons
         [isPending]="invoice.status === 'pending' ? true : false"
       />
     </section>
+    <app-alert-dialog [invoiceId]="invoiceId" />
   }
 </main>
