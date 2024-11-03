@@ -1,14 +1,14 @@
-<main class="my-8 md:my-[60px] lg:ml-[103px]">
+<main class="my-8 md:my-[3.75rem] lg:ml-[6.4375rem]">
   <app-form />
   <div
-    class="flex h-[44px] items-center justify-between px-[5%] lg:mx-auto lg:w-[730px] lg:px-0"
+    class="flex h-[2.75rem] items-center justify-between px-[5%] lg:mx-auto lg:w-[45.625rem] lg:px-0"
   >
     <section>
       <h1 class="uppercase">invoices</h1>
       <span>{{ invoiceTotal }}</span>
     </section>
     <section class="flex items-center gap-x-4 md:gap-x-10">
-      <app-drop-down></app-drop-down>
+      <app-drop-down />
       <app-button
         [text]="btnText"
         [isNewInvoiceBtn]="true"
