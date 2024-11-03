@@ -3,7 +3,7 @@ import { Invoice } from "../../../interfaces/invoice.interface";
 import { CommonModule } from "@angular/common";
 import { RouterLink } from "@angular/router";
 import { StatusIndicatorComponent } from "../../shared/status-indicator/status-indicator.component";
-import { InvoiceDataService } from "../../../services/invoice-data.service";
+import { InvoiceService } from "../../../services/invoice.service";
 
 @Component({
   selector: "app-invoice-item",
@@ -14,10 +14,10 @@ import { InvoiceDataService } from "../../../services/invoice-data.service";
 export class InvoiceItemComponent {
   invoices: Invoice[] = [];
 
-  constructor(private invoiceDataService: InvoiceDataService) {}
+  constructor(private invoiceService: InvoiceService) {}
 
   ngOnInit(): void {
-    this.invoiceDataService.getInvoices().subscribe((data) => {
+    this.invoiceService.getInvoices().subscribe((data) => {
       this.invoices = data;
     });
   }
