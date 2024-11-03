@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
 import {
+  FormArray,
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
@@ -14,6 +15,9 @@ import { ButtonComponent } from "../button/button.component";
 import { ActionButtonsComponent } from "../action-buttons/action-buttons.component";
 import { OutsideClickDirective } from "../../../directives/outside-click.directive";
 import { FormService } from "../../../services/form.service";
+import { InvoiceService } from "../../../services/invoice.service";
+import { FormButtonsComponent } from "./form-buttons/form-buttons.component";
+import { Invoice } from "../../../interfaces/invoice.interface";
 
 @Component({
   selector: "app-form",
@@ -28,6 +32,7 @@ import { FormService } from "../../../services/form.service";
     ButtonComponent,
     ActionButtonsComponent,
     OutsideClickDirective,
+    FormButtonsComponent,
   ],
   templateUrl: "./form.component.html",
 })
@@ -46,10 +51,6 @@ export class FormComponent {
     { id: 3, value: "net 30 days", isActive: true },
   ];
 
-  hideForm() {
-    this.formService.setFormState(false);
-  }
-
   formState(): boolean {
     return this.formService.getFormState();
   }
@@ -57,6 +58,7 @@ export class FormComponent {
   constructor(
     private formBuilder: FormBuilder,
     private formService: FormService,
+    private invoiceService: InvoiceService,
   ) {
     this.invoiceForm = this.formBuilder.group({
       createdAt: ["", Validators.required],
@@ -78,15 +80,25 @@ export class FormComponent {
         postCode: ["", Validators.required],
         country: ["", Validators.required],
       }),
-      items: this.formBuilder.array([
-        this.formBuilder.group({
-          name: ["", Validators.required],
-          quantity: [1, [Validators.required, Validators.min(1)]],
-          price: [0, [Validators.required, Validators.min(0)]],
-          total: [0, Validators.required],
-        }),
-      ]),
-      total: [0, Validators.required],
+      items: this.formBuilder.array([]),
+      total: [],
     });
+  }
+
+  get items(): FormArray {
+    return this.invoiceForm.get("items") as FormArray;
+  }
+  onTotalUpdated(newTotal: number): void {
+    this.invoiceForm.get("total")?.setValue(newTotal);
+  }
+
+  submitForm() {
+    // if (this.invoiceForm.valid) {
+    const invoice: Invoice = this.invoiceForm.value;
+    this.invoiceService.createInvoice(invoice).subscribe((response) => {
+      console.log("Invoice created:", response);
+      this.invoiceForm.reset(); // Clear form after submission
+    });
+    // }
   }
 }
