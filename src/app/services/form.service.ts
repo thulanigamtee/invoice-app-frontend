@@ -7,10 +7,6 @@ import { BehaviorSubject } from "rxjs";
 export class FormService {
   private isActive = new BehaviorSubject<boolean>(false);
 
-  // isActive$ = this.isActive.asObservable();
-
-  constructor() {}
-
   getFormState(): boolean {
     return this.isActive.value;
   }
