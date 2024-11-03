@@ -18,6 +18,7 @@ export class InputComponent implements ControlValueAccessor, Validator {
   @Input() id!: string;
   @Input() placeholder!: string;
   @Input() control!: any;
+  @Input() readonly!: boolean;
 
   onChange: (value: any) => void = () => {};
   onTouched: () => void = () => {};
