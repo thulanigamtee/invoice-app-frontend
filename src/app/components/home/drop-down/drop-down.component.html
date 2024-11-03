@@ -15,7 +15,7 @@
   </button>
   <ul
     [class.active]="isActive"
-    class="drop-down absolute mt-10 h-[120px] w-[130px] rounded-xl bg-btnBgPrimary p-4 md:h-[128px] md:w-[192px] md:px-6 md:py-4"
+    class="drop-down absolute mt-10 flex h-[120px] w-[130px] flex-col justify-center gap-[4px] rounded-xl bg-btnBgPrimary p-4 md:h-[128px] md:w-[192px] md:px-6 md:py-4"
   >
     @for (option of options; track $index) {
       <li class="flex items-center gap-x-4" (click)="updateStatus(option.id)">
