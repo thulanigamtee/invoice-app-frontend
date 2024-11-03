@@ -18,11 +18,11 @@
     <div class="grid grid-cols-2">
       <div class="flex flex-col justify-between">
         <div>
-          <span>Invoice Date</span>
+          <span class="capitalize">invoice date</span>
           <p>{{ invoice.createdAt | date: "d MMM y" }}</p>
         </div>
         <div>
-          <span>Payment Due</span>
+          <span class="capitalize">payment due</span>
           <p>{{ invoice.paymentDue | date: "d MMM y" }}</p>
         </div>
       </div>
@@ -38,7 +38,7 @@
       </div>
     </div>
     <div class="my-6 md:my-0">
-      <span>Sent to</span>
+      <span class="capitalize">sent to</span>
       <p>{{ invoice.clientEmail }}</p>
     </div>
   </article>
