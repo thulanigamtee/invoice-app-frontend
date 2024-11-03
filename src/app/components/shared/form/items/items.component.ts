@@ -1,6 +1,7 @@
-import { Component, Input } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { InputComponent } from "../input/input.component";
 import {
+  FormBuilder,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
@@ -14,15 +15,46 @@ import { ButtonComponent } from "../../button/button.component";
   imports: [InputComponent, ReactiveFormsModule, ButtonComponent],
   templateUrl: "./items.component.html",
 })
-export class ItemsComponent {
+export class ItemsComponent implements OnInit {
   @Input() items!: any;
+  @Output() totalUpdated = new EventEmitter<number>();
 
-  createItem(): FormGroup {
-    return new FormGroup({
-      name: new FormControl("", Validators.required),
-      quantity: new FormControl(1, [Validators.required, Validators.min(1)]),
-      price: new FormControl(0, [Validators.required, Validators.min(0)]),
-      total: new FormControl(0, Validators.required),
+  // createItem(): FormGroup {
+  //   return new FormGroup({
+  //     name: new FormControl("", Validators.required),
+  //     quantity: new FormControl(1, [Validators.required, Validators.min(1)]),
+  //     price: new FormControl(0, [Validators.required, Validators.min(0)]),
+  //     total: new FormControl(0, Validators.required),
+  //   });
+  // }
+  constructor(private formBuilder: FormBuilder) {}
+  ngOnInit(): void {
+    if (!this.items) this.items = this.formBuilder.array([]);
+  }
+
+  addItem(): void {
+    const item: FormGroup = this.formBuilder.group({
+      name: ["", Validators.required],
+      quantity: [1, [Validators.required, Validators.min(1)]],
+      price: [0, Validators.required],
+      total: [0],
     });
+    this.items.push(item);
+  }
+
+  removeItem(index: number): void {
+    this.items.removeAt(index);
+    this.updateTotal();
+  }
+
+  updateTotal(): void {
+    const total = this.items.controls.reduce((acc: any, item: any) => {
+      const quantity = item.get("quantity")?.value || 0;
+      const price = item.get("price")?.value || 0;
+      const itemTotal = quantity * price;
+      item.get("total")?.setValue(itemTotal, { emitEvent: false });
+      return acc + itemTotal;
+    }, 0);
+    this.totalUpdated.emit(total);
   }
 }
