@@ -1,0 +1,21 @@
+<section
+  class="sticky bottom-0 flex h-20 items-center justify-between bg-itemsBgPrimary px-[5%] md:bg-[#141625]"
+>
+  <app-button
+    [text]="'Discard'"
+    class="rounded-full bg-btnBgPrimary px-2"
+    (click)="discardForm()"
+  />
+  <div class="flex gap-x-2">
+    <app-button
+      [text]="'Save as Draft'"
+      class="rounded-full bg-[#373B53] px-2"
+    />
+    <app-button
+      [text]="'Save & Send'"
+      class="rounded-full bg-purplePrimary px-2"
+      type="submit"
+      (click)="emitSubmitEvent()"
+    />
+  </div>
+</section>
