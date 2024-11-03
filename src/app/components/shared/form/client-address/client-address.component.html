@@ -1,6 +1,7 @@
 <div [formGroup]="clientAddress">
   <div class="mt-4 flex flex-col gap-y-6">
     <app-input
+      [id]="'clientStreet'"
       [label]="'Street'"
       [type]="'text'"
       [placeholder]="'Enter street'"
@@ -8,18 +9,21 @@
     />
     <div class="grid grid-cols-2 gap-4 md:grid-cols-3">
       <app-input
+        [id]="'clientCity'"
         [label]="'City'"
         [type]="'text'"
         [placeholder]="'Enter city'"
         [control]="clientAddress.get('city')"
       />
       <app-input
+        [id]="'clientPostCode'"
         [label]="'Post Code'"
         [type]="'text'"
         [placeholder]="'Enter post code'"
         [control]="clientAddress.get('postCode')"
       />
       <app-input
+        [id]="'clientCountry'"
         [label]="'Country'"
         [type]="'text'"
         [placeholder]="'Enter country'"
