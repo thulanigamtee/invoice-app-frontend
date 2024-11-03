@@ -5,6 +5,9 @@
 
 body {
   background-color: var(--background);
+  &.no-scroll {
+    overflow: hidden;
+  }
 }
 
 p,
@@ -18,7 +21,6 @@ h3,
 h3,
 h5 {
   font-family: $leagueSpartan;
-  font-optical-sizing: auto;
   font-style: normal;
   color: white;
 }
@@ -69,43 +71,10 @@ input {
 }
 
 .drop-down {
-  display: none;
-  opacity: 0;
-  transition-property: display opacity;
-  transition-duration: 0.3s;
-  transition-behavior: allow-discrete;
-  translate: 0 10px;
-  flex-direction: column;
-  justify-content: center;
-  gap: 4px;
-  &.active {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 4px;
-    opacity: 1;
-    translate: 0 0;
-    @starting-style {
-      opacity: 0;
-      translate: 0 -10px;
-    }
-  }
+  @include fadeIn(flex);
 }
 
-.form {
-  display: none;
-  opacity: 0;
-  transition-property: display opacity;
-  transition-duration: 0.5s;
-  transition-behavior: allow-discrete;
-  translate: -10px 0;
-  &.active {
-    display: block;
-    opacity: 1;
-    translate: 0 0;
-    @starting-style {
-      opacity: 0;
-      translate: -10px 0;
-    }
-  }
+.form,
+.dialog {
+  @include fadeIn(block);
 }
