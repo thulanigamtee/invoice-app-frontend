@@ -1,0 +1,26 @@
+<div
+  [class.active]="dialogState()"
+  class="dialog fixed inset-0 h-full w-full bg-black bg-opacity-50 backdrop-blur-sm"
+>
+  <div
+    class="absolute left-1/2 top-1/2 w-[87%] max-w-[480px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-lg bg-itemsBgPrimary p-7 md:p-10"
+  >
+    <h2 class="text-2xl font-bold capitalize">confirm deletion</h2>
+    <p class="mt-3 text-sm font-medium text-[#888EB0]">
+      Are you sure you want to delete invoice #{{ invoiceId }}? This action
+      cannot be undone.
+    </p>
+    <div class="mt-8 flex justify-end gap-x-4">
+      <app-button
+        [text]="'cancel'"
+        class="rounded-full bg-btnBgPrimary px-4"
+        (click)="cancelDeletion()"
+      />
+      <app-button
+        [text]="'delete'"
+        class="rounded-full bg-redPrimary px-4"
+        (click)="confirmDeletion()"
+      />
+    </div>
+  </div>
+</div>
