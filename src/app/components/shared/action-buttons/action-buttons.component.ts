@@ -1,5 +1,6 @@
 import { Component, Input } from "@angular/core";
 import { ButtonComponent } from "../button/button.component";
+import { DialogService } from "../../../services/dialog.service";
 
 @Component({
   selector: "app-action-buttons",
@@ -8,10 +9,12 @@ import { ButtonComponent } from "../button/button.component";
   templateUrl: "./action-buttons.component.html",
 })
 export class ActionButtonsComponent {
-  @Input() isPending: boolean = false;
-  @Input() invoiceId!: string;
+  @Input() isPending: boolean = false; // is invoice status === pending
+  @Input() invoiceId: string = "";
+
+  constructor(private dialogService: DialogService) {}
 
   deleteInvoice() {
-    console.log("gsgsggs");
+    this.dialogService.setDialogState(true);
   }
 }
