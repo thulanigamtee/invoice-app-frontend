@@ -3,6 +3,7 @@
     [text]="'Edit'"
     [isNewInvoiceBtn]="false"
     class="rounded-full bg-btnBgPrimary px-4"
+    (click)="emitEditInvoice()"
   />
   <app-button
     [text]="'Delete'"
