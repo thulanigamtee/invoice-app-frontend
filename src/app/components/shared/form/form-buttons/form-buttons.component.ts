@@ -10,15 +10,24 @@ import { FormService } from "../../../../services/form.service";
 })
 export class FormButtonsComponent {
   @Output() submitEvent = new EventEmitter();
-
+  @Output() changesEvent = new EventEmitter();
+  @Output() draftEvent = new EventEmitter();
   emitSubmitEvent() {
     this.submitEvent.emit();
-    console.log("sike");
+  }
+  emitChangesEvent() {
+    this.changesEvent.emit();
+  }
+  emitDraftEvent() {
+    this.draftEvent.emit();
   }
 
   constructor(private formService: FormService) {}
 
-  discardForm() {
+  isEditMode(): boolean {
+    return this.formService.getIsEditMode();
+  }
+  discardForm(): void {
     this.formService.setFormState(false);
     document.body.classList.remove("no-scroll");
   }
