@@ -78,3 +78,8 @@ input {
 .dialog {
   @include fadeIn(block);
 }
+
+img{
+  display: block;
+  max-width: 100%;
+}
