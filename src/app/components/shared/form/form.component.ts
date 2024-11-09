@@ -85,6 +85,9 @@ export class FormComponent {
     });
   }
 
+  isEditMode() {
+    return this.formService.getIsEditMode();
+  }
   get items(): FormArray {
     return this.invoiceForm.get("items") as FormArray;
   }
@@ -100,5 +103,12 @@ export class FormComponent {
       this.invoiceForm.reset(); // Clear form after submission
     });
     // }
+  }
+  loadInvoice(id: string) {
+    this.formService.setFormState(true);
+    this.formService.setIsEditMode(true);
+    this.invoiceService.getInvoiceById(id).subscribe((invoice) => {
+      this.invoiceForm.patchValue(invoice);
+    });
   }
 }
