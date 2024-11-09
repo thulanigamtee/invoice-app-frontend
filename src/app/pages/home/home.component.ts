@@ -28,6 +28,7 @@ export class HomeComponent {
 
   showForm() {
     this.formService.setFormState(true);
+    this.formService.setIsEditMode(false);
     document.body.classList.add("no-scroll");
   }
 
