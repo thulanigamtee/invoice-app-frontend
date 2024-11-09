@@ -22,4 +22,7 @@ export class InvoiceService {
   deleteInvoice(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+  getInvoiceById(id: string): Observable<Invoice> {
+    return this.http.get<Invoice>(`${this.apiUrl}/${id}`);
+  }
 }
