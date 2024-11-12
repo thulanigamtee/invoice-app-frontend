@@ -1,4 +1,6 @@
 <div class="lg:w-full">
   <app-sidebar />
-  <router-outlet />
+  <div [@routeAnimations]="getRouteAnimationData(outlet)" >
+    <router-outlet #outlet="outlet" />
+  </div>
 </div>
