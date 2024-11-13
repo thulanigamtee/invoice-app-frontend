@@ -19,7 +19,7 @@
       >
         bill to
       </h3>
-      <div class="mt-4 flex flex-col gap-y-5">
+      <div class="flex flex-col mt-4 gap-y-5">
         <app-input
           [id]="'name'"
           [label]="'client\'s name'"
@@ -36,7 +36,7 @@
         />
       </div>
       <app-client-address [clientAddress]="invoiceForm.get('clientAddress')" />
-      <div class="mt-8 grid gap-6 md:grid-cols-2">
+      <div class="grid gap-6 mt-8 md:grid-cols-2">
         <app-input
           [id]="'date'"
           [label]="'invoice date'"
@@ -52,13 +52,13 @@
           <span class="text-[#888EB0]">Payment Terms</span>
           <button
             (click)="toggleDropdown()"
-            class="flex h-12 items-center justify-between rounded-lg bg-itemsBgPrimary px-6"
+            class="flex items-center justify-between h-12 px-6 rounded-lg bg-itemsBgPrimary"
           >
             <p class="capitalize">net 30 days</p>
             <img src="/assets/icon-arrow-down.svg" alt="icon-arrow-down" />
           </button>
           <ul
-            class="drop-down absolute mt-20 rounded-lg bg-itemsBgPrimary"
+            class="absolute mt-20 rounded-lg drop-down bg-itemsBgPrimary"
             [class.active]="isActive"
           >
             @for (option of options; track $index) {

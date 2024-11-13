@@ -11,9 +11,6 @@ import { ClientAddressComponent } from "./client-address/client-address.componen
 import { SenderAddressComponent } from "./sender-address/sender-address.component";
 import { ItemsComponent } from "./items/items.component";
 import { InputComponent } from "./input/input.component";
-import { ButtonComponent } from "../button/button.component";
-import { ActionButtonsComponent } from "../action-buttons/action-buttons.component";
-import { OutsideClickDirective } from "../../../directives/outside-click.directive";
 import { FormService } from "../../../services/form.service";
 import { InvoiceService } from "../../../services/invoice.service";
 import { FormButtonsComponent } from "./form-buttons/form-buttons.component";
@@ -29,9 +26,6 @@ import { Invoice } from "../../../interfaces/invoice.interface";
     SenderAddressComponent,
     ItemsComponent,
     InputComponent,
-    ButtonComponent,
-    ActionButtonsComponent,
-    OutsideClickDirective,
     FormButtonsComponent,
   ],
   templateUrl: "./form.component.html",
@@ -104,11 +98,24 @@ export class FormComponent {
     });
     // }
   }
-  loadInvoice(id: string) {
-    this.formService.setFormState(true);
+loadInvoice(id: string) {
     this.formService.setIsEditMode(true);
+    this.formService.setFormState(true);
     this.invoiceService.getInvoiceById(id).subscribe((invoice) => {
       this.invoiceForm.patchValue(invoice);
+  
+      const itemsFormArray = this.invoiceForm.get('items') as FormArray;
+      itemsFormArray.clear();
+  
+      invoice.items.forEach( item => {
+        itemsFormArray.push(this.formBuilder.group({
+          name: [item.name, Validators.required],
+          quantity: [item.quantity, [Validators.required, Validators.min(1)]],
+          price: [item.price, [Validators.required, Validators.min(0)]],
+          total: [item.total, Validators.required]
+        }));
+      });
     });
   }
+  
 }
