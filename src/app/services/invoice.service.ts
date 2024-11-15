@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable, tap } from "rxjs";
 import { Invoice } from "../interfaces/invoice.interface";
 
 @Injectable({
@@ -9,10 +9,15 @@ import { Invoice } from "../interfaces/invoice.interface";
 export class InvoiceService {
   private apiUrl = "http://localhost:8080/invoices";
 
+  private invoicesCount = new BehaviorSubject<number>(0);
+  invoicesCount$ = this.invoicesCount.asObservable();
+
   constructor(private http: HttpClient) {}
 
   getInvoices(): Observable<Invoice[]> {
-    return this.http.get<any>(`${this.apiUrl}`);
+    return this.http.get<any>(`${this.apiUrl}`).pipe(tap((data) => {
+      this.invoicesCount.next(data.length)
+    }));
   }
 
   createInvoice(newInvoice: Invoice): Observable<Invoice> {
