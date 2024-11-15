@@ -1,8 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, Output } from "@angular/core";
 import { OutsideClickDirective } from "../../../directives/outside-click.directive";
-import { BreakpointObserver } from "@angular/cdk/layout";
-import { map } from "rxjs";
+import { BreakpointObserverService } from "../../../services/breakpointObserver.service";
 
 @Component({
   selector: "app-drop-down",
@@ -28,10 +27,12 @@ export class DropDownComponent {
     this.emitIsActiveEvent();
   }
 
+  constructor(private breakpointObserver: BreakpointObserverService) {}
+
   options: { id: number; value: string; checked: boolean }[] = [
     { id: 0, value: "draft", checked: false },
     { id: 1, value: "pending", checked: false },
-    { id: 2, value: "paid", checked: true },
+    { id: 2, value: "paid", checked: false },
   ];
 
   updateStatus(id: number): void {
@@ -41,19 +42,22 @@ export class DropDownComponent {
     }));
   }
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  @Output() filterEvent = new EventEmitter();
 
-  isMediumWidth: boolean = false;
-  placeholder: string = "Filter";
+  emitFilterEvent(status: string, id:number) {
+    this.filterEvent.emit(status);
+    this.updateStatus(id);
+  }
+  
   ngOnInit() {
-    this.breakpointObserver
-      .observe("(min-width: 768px)")
-      .pipe(map((result) => result.matches))
-      .subscribe((matches) => {
-        this.isMediumWidth = matches;
-        this.isMediumWidth
-          ? (this.placeholder = "Filter by status")
-          : (this.placeholder = "Filter");
-      });
+    this.observeBreakpoint();
+  }
+
+  isMediumWidth() {
+    return this.breakpointObserver.isMediumWidth.value;
+  }
+
+  observeBreakpoint() {
+    this.breakpointObserver.observeBreakpoint();
   }
 }
