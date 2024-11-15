@@ -4,15 +4,15 @@
     class="flex h-[2.75rem] items-center justify-between px-[5%] lg:mx-auto lg:w-[45.625rem] lg:px-0"
   >
     <section>
-      <h1 class="uppercase">invoices</h1>
-      <span>{{ invoiceTotal }}</span>
+      <h1 class="capitalize">invoices</h1>
+      <span>{{invoicesCount}} total invoices</span>
     </section>
     <section class="flex items-center gap-x-4 md:gap-x-10">
-      <app-drop-down />
+      <app-drop-down (filterEvent)="filterByStatus($event)" />
       <app-button
-        [text]="btnText"
+        [text]="isMediumWidth() ? 'new invoice' : 'new' "
         [isNewInvoiceBtn]="true"
-        class="rounded-full bg-purplePrimary pr-1"
+        class="pr-1 rounded-full bg-purplePrimary"
         (click)="showForm()"
       >
         <span
