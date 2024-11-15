@@ -18,18 +18,9 @@ export class ActionButtonsComponent {
     this.editInvoice.emit();
   }
 
-  constructor(
-    private dialogService: DialogService,
-    private formService: FormService,
-  ) {}
+  constructor(private dialogService: DialogService) {}
 
   deleteInvoice() {
     this.dialogService.setDialogState(true);
   }
-
-  // editInvoice() {
-  //   this.formService.setFormState(true);
-  //   this.formService.setFormMode(true);
-  //   document.body.classList.add("no-scroll");
-  // }
 }

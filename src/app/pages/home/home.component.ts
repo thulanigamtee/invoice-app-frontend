@@ -14,7 +14,7 @@ import { BreakpointObserverService } from "../../services/breakpointObserver.ser
     ButtonComponent,
     InvoiceItemComponent,
     FormComponent,
-],
+  ],
   templateUrl: "./home.component.html",
 })
 export class HomeComponent implements OnInit {
@@ -47,8 +47,8 @@ export class HomeComponent implements OnInit {
     document.body.classList.add("no-scroll");
   }
 
-  @ViewChild(InvoiceItemComponent) invoiceItem!: InvoiceItemComponent
-  filterByStatus(status:string) {
+  @ViewChild(InvoiceItemComponent) invoiceItem!: InvoiceItemComponent;
+  filterByStatus(status: string) {
     this.invoiceItem.filterByStatus(status);
   }
 }

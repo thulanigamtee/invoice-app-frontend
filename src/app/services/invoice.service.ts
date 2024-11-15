@@ -15,9 +15,11 @@ export class InvoiceService {
   constructor(private http: HttpClient) {}
 
   getInvoices(): Observable<Invoice[]> {
-    return this.http.get<any>(`${this.apiUrl}`).pipe(tap((data) => {
-      this.invoicesCount.next(data.length)
-    }));
+    return this.http.get<any>(`${this.apiUrl}`).pipe(
+      tap((data) => {
+        this.invoicesCount.next(data.length);
+      }),
+    );
   }
 
   createInvoice(newInvoice: Invoice): Observable<Invoice> {

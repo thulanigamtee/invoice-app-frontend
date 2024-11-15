@@ -5,12 +5,12 @@
   >
     <section>
       <h1 class="capitalize">invoices</h1>
-      <span>{{invoicesCount}} total invoices</span>
+      <span>{{ invoicesCount }} total invoices</span>
     </section>
     <section class="flex items-center gap-x-4 md:gap-x-10">
       <app-drop-down (filterEvent)="filterByStatus($event)" />
       <app-button
-        [text]="isMediumWidth() ? 'new invoice' : 'new' "
+        [text]="isMediumWidth() ? 'new invoice' : 'new'"
         [isNewInvoiceBtn]="true"
         class="pr-1 rounded-full bg-purplePrimary"
         (click)="showForm()"

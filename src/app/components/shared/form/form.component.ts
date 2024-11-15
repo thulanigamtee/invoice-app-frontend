@@ -98,24 +98,25 @@ export class FormComponent {
     });
     // }
   }
-loadInvoice(id: string) {
+  loadInvoice(id: string) {
     this.formService.setIsEditMode(true);
     this.formService.setFormState(true);
     this.invoiceService.getInvoiceById(id).subscribe((invoice) => {
       this.invoiceForm.patchValue(invoice);
-  
-      const itemsFormArray = this.invoiceForm.get('items') as FormArray;
+
+      const itemsFormArray = this.invoiceForm.get("items") as FormArray;
       itemsFormArray.clear();
-  
-      invoice.items.forEach( item => {
-        itemsFormArray.push(this.formBuilder.group({
-          name: [item.name, Validators.required],
-          quantity: [item.quantity, [Validators.required, Validators.min(1)]],
-          price: [item.price, [Validators.required, Validators.min(0)]],
-          total: [item.total, Validators.required]
-        }));
+
+      invoice.items.forEach((item) => {
+        itemsFormArray.push(
+          this.formBuilder.group({
+            name: [item.name, Validators.required],
+            quantity: [item.quantity, [Validators.required, Validators.min(1)]],
+            price: [item.price, [Validators.required, Validators.min(0)]],
+            total: [item.total, Validators.required],
+          }),
+        );
       });
     });
   }
-  
 }

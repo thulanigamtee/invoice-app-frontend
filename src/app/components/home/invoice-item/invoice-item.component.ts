@@ -10,12 +10,18 @@ import { LoaderComponent } from "../../shared/loader/loader.component";
 @Component({
   selector: "app-invoice-item",
   standalone: true,
-  imports: [CommonModule, RouterLink, StatusIndicatorComponent, NoInvoicesComponent, LoaderComponent],
+  imports: [
+    CommonModule,
+    RouterLink,
+    StatusIndicatorComponent,
+    NoInvoicesComponent,
+    LoaderComponent,
+  ],
   templateUrl: "./invoice-item.component.html",
 })
 export class InvoiceItemComponent {
   invoices: Invoice[] = [];
-  invoicesCount:number = 0;
+  invoicesCount: number = 0;
   isLoading: boolean = true;
 
   constructor(private invoiceService: InvoiceService) {}
@@ -29,14 +35,14 @@ export class InvoiceItemComponent {
       this.invoices = data;
       this.invoicesCount = data.length;
       this.isLoading = false;
-    })
+    });
   }
 
-  filterByStatus(status: string) { 
+  filterByStatus(status: string) {
     this.invoiceService.getInvoices().subscribe((data) => {
       this.invoices = data.filter((invoice) => {
         return invoice.status === status;
-      })
-    })
+      });
+    });
   }
 }

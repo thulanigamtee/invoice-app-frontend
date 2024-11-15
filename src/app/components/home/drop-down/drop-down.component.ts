@@ -44,11 +44,11 @@ export class DropDownComponent {
 
   @Output() filterEvent = new EventEmitter();
 
-  emitFilterEvent(status: string, id:number) {
+  emitFilterEvent(status: string, id: number) {
     this.filterEvent.emit(status);
     this.updateStatus(id);
   }
-  
+
   ngOnInit() {
     this.observeBreakpoint();
   }

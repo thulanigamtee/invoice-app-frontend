@@ -5,7 +5,7 @@ import { AlertDialogComponent } from "../alert-dialog/alert-dialog.component";
 @Component({
   selector: "app-invoice-info",
   standalone: true,
-  imports: [CommonModule, AlertDialogComponent],
+  imports: [CommonModule],
   templateUrl: "./invoice-info.component.html",
 })
 export class InvoiceInfoComponent {

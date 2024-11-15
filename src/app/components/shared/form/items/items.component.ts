@@ -19,14 +19,6 @@ export class ItemsComponent implements OnInit {
   @Input() items!: any;
   @Output() totalUpdated = new EventEmitter<number>();
 
-  // createItem(): FormGroup {
-  //   return new FormGroup({
-  //     name: new FormControl("", Validators.required),
-  //     quantity: new FormControl(1, [Validators.required, Validators.min(1)]),
-  //     price: new FormControl(0, [Validators.required, Validators.min(0)]),
-  //     total: new FormControl(0, Validators.required),
-  //   });
-  // }
   constructor(private formBuilder: FormBuilder) {}
   ngOnInit(): void {
     if (!this.items) this.items = this.formBuilder.array([]);

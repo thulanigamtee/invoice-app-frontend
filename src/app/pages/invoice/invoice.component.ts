@@ -3,7 +3,6 @@ import { ActivatedRoute } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { InvoiceInfoComponent } from "../../components/invoice/invoice-info/invoice-info.component";
 import { StatusIndicatorComponent } from "../../components/shared/status-indicator/status-indicator.component";
-import { ButtonComponent } from "../../components/shared/button/button.component";
 import { ActionButtonsComponent } from "../../components/shared/action-buttons/action-buttons.component";
 import { Invoice } from "../../interfaces/invoice.interface";
 import { AlertDialogComponent } from "../../components/invoice/alert-dialog/alert-dialog.component";
@@ -17,7 +16,6 @@ import { FormComponent } from "../../components/shared/form/form.component";
     CommonModule,
     InvoiceInfoComponent,
     StatusIndicatorComponent,
-    ButtonComponent,
     ActionButtonsComponent,
     AlertDialogComponent,
     FormComponent,

@@ -9,7 +9,7 @@
     class="flex items-center justify-between gap-x-4"
   >
     <p class="font-bold whitespace-nowrap">
-      {{ isMediumWidth() ? "Filter by status" : "Filter"}}
+      {{ isMediumWidth() ? "Filter by status" : "Filter" }}
     </p>
     <img src="/assets/icon-arrow-down.svg" alt="icon-arrow-down" />
   </button>
@@ -18,7 +18,10 @@
     class="drop-down absolute mt-10 flex h-[120px] w-[130px] flex-col justify-center gap-[4px] rounded-xl bg-btnBgPrimary p-4 md:h-[128px] md:w-[192px] md:px-6 md:py-4"
   >
     @for (option of options; track $index) {
-      <li class="flex items-center gap-x-4" (click)="emitFilterEvent(option.value, option.id)">
+      <li
+        class="flex items-center gap-x-4"
+        (click)="emitFilterEvent(option.value, option.id)"
+      >
         <button
           class="bg-itemsPrimary h-[16px] w-[16px] rounded-[2px] border-[1px] border-[#7C5DFA]"
           [ngClass]="{
