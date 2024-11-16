@@ -15,7 +15,7 @@ export class InvoiceService {
   constructor(private http: HttpClient) {}
 
   getInvoices(): Observable<Invoice[]> {
-    return this.http.get<any>(`${this.apiUrl}`).pipe(
+    return this.http.get<Invoice[]>(`${this.apiUrl}`).pipe(
       tap((data) => {
         this.invoicesCount.next(data.length);
       }),
