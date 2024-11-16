@@ -29,7 +29,11 @@ export class DropDownComponent {
 
   constructor(private breakpointObserver: BreakpointObserverService) {}
 
-  options: { id: number; value: string; checked: boolean }[] = [
+  options: {
+    id: number;
+    value: "draft" | "pending" | "paid";
+    checked: boolean;
+  }[] = [
     { id: 0, value: "draft", checked: false },
     { id: 1, value: "pending", checked: false },
     { id: 2, value: "paid", checked: false },
@@ -42,10 +46,16 @@ export class DropDownComponent {
     }));
   }
 
-  @Output() filterEvent = new EventEmitter();
+  @Output() filterEvent = new EventEmitter<{
+    status: "draft" | "pending" | "paid";
+    isChecked: boolean;
+  }>();
 
-  emitFilterEvent(status: string, id: number) {
-    this.filterEvent.emit(status);
+  emitFilterEvent(
+    event: { status: "draft" | "pending" | "paid"; isChecked: boolean },
+    id: number,
+  ) {
+    this.filterEvent.emit(event);
     this.updateStatus(id);
   }
 

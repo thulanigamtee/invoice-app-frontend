@@ -8,7 +8,7 @@
     (click)="toggleDropDown()"
     class="flex items-center justify-between gap-x-4"
   >
-    <p class="font-bold whitespace-nowrap">
+    <p class="whitespace-nowrap font-bold">
       {{ isMediumWidth() ? "Filter by status" : "Filter" }}
     </p>
     <img src="/assets/icon-arrow-down.svg" alt="icon-arrow-down" />
@@ -20,7 +20,12 @@
     @for (option of options; track $index) {
       <li
         class="flex items-center gap-x-4"
-        (click)="emitFilterEvent(option.value, option.id)"
+        (click)="
+          emitFilterEvent(
+            { status: option.value, isChecked: option.checked },
+            option.id
+          )
+        "
       >
         <button
           class="bg-itemsPrimary h-[16px] w-[16px] rounded-[2px] border-[1px] border-[#7C5DFA]"
