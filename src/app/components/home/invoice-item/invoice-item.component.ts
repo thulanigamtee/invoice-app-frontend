@@ -38,11 +38,36 @@ export class InvoiceItemComponent {
     });
   }
 
-  filterByStatus(status: string) {
-    this.invoiceService.getInvoices().subscribe((data) => {
-      this.invoices = data.filter((invoice) => {
-        return invoice.status === status;
+  filteredInvoices: Invoice[] = [];
+  statusCounts: { draft: number; pending: number; paid: number } = {
+    draft: 0,
+    pending: 0,
+    paid: 0,
+  };
+
+  filterByStatus(event: {
+    status: "draft" | "pending" | "paid";
+    isChecked: boolean;
+  }) {
+    if (!event.isChecked) {
+      this.invoiceService.getInvoices().subscribe((data) => {
+        this.invoices = data.filter(
+          (invoice) => invoice.status === event.status,
+        );
       });
-    });
+    } else {
+      this.invoiceService.getInvoices().subscribe((data) => {
+        this.invoices = data;
+      });
+    }
+    this.statusCounts.draft = this.invoices.filter(
+      (draft) => draft.status === "draft",
+    ).length;
+    this.statusCounts.pending = this.invoices.filter(
+      (pending) => pending.status === "pending",
+    ).length;
+    this.statusCounts.paid = this.invoices.filter(
+      (paid) => paid.status === "paid",
+    ).length;
   }
 }
