@@ -5,6 +5,7 @@ import { InvoiceItemComponent } from "../../components/home/invoice-item/invoice
 import { FormComponent } from "../../components/shared/form/form.component";
 import { FormService } from "../../services/form.service";
 import { BreakpointObserverService } from "../../services/breakpointObserver.service";
+import { InvoiceService } from "../../services/invoice.service";
 
 @Component({
   selector: "app-home",
@@ -23,10 +24,14 @@ export class HomeComponent implements OnInit {
   constructor(
     private breakpointObserver: BreakpointObserverService,
     private formService: FormService,
+    private invoiceService: InvoiceService,
   ) {}
 
   ngOnInit() {
     this.observeBreakpoint();
+    this.invoiceService.invoicesCount$.subscribe((count) => {
+      this.invoicesCount = count;
+    });
   }
 
   isMediumWidth() {
@@ -48,7 +53,10 @@ export class HomeComponent implements OnInit {
   }
 
   @ViewChild(InvoiceItemComponent) invoiceItem!: InvoiceItemComponent;
-  filterByStatus(status: string) {
-    this.invoiceItem.filterByStatus(status);
+  filterByStatus(event: {
+    status: "draft" | "pending" | "paid";
+    isChecked: boolean;
+  }) {
+    this.invoiceItem.filterByStatus(event);
   }
 }
