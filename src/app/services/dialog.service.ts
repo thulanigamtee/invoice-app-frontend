@@ -6,6 +6,7 @@ import { BehaviorSubject } from "rxjs";
 })
 export class DialogService {
   private isActive = new BehaviorSubject<boolean>(false);
+  isActive$ = this.isActive.asObservable();
 
   get dialogState() {
     return this.isActive.value;
