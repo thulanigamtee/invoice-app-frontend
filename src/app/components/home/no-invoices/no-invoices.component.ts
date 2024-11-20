@@ -10,15 +10,15 @@ import { BreakpointObserverService } from "../../../services/breakpointObserver.
 export class NoInvoicesComponent {
   constructor(private breakpointObserver: BreakpointObserverService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.observeBreakpoint();
   }
 
-  isMediumWidth() {
+  isMediumWidth(): boolean {
     return this.breakpointObserver.isMediumWidth.value;
   }
 
-  observeBreakpoint() {
+  observeBreakpoint(): void {
     this.breakpointObserver.observeBreakpoint();
   }
 }
