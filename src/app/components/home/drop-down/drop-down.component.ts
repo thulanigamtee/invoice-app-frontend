@@ -13,16 +13,16 @@ export class DropDownComponent {
   @Output() isActiveEvent = new EventEmitter<boolean>();
   isActive: boolean = false;
 
-  emitIsActiveEvent() {
+  emitIsActiveEvent(): void {
     this.isActiveEvent.emit(this.isActive);
   }
 
-  toggleDropDown() {
+  toggleDropDown(): void {
     this.isActive = !this.isActive;
     this.emitIsActiveEvent();
   }
 
-  outsideClick() {
+  outsideClick(): void {
     this.isActive = false;
     this.emitIsActiveEvent();
   }
@@ -54,20 +54,20 @@ export class DropDownComponent {
   emitFilterEvent(
     event: { status: "draft" | "pending" | "paid"; isChecked: boolean },
     id: number,
-  ) {
+  ): void {
     this.filterEvent.emit(event);
     this.updateStatus(id);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.observeBreakpoint();
   }
 
-  isMediumWidth() {
+  isMediumWidth(): boolean {
     return this.breakpointObserver.isMediumWidth.value;
   }
 
-  observeBreakpoint() {
+  observeBreakpoint(): void {
     this.breakpointObserver.observeBreakpoint();
   }
 }
