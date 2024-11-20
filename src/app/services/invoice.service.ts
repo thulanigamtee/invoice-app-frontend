@@ -12,12 +12,22 @@ export class InvoiceService {
   private invoicesCount = new BehaviorSubject<number>(0);
   invoicesCount$ = this.invoicesCount.asObservable();
 
+  private statusCount = new BehaviorSubject<number>(0);
+  statusCount$ = this.statusCount.asObservable();
+
+  private _isFiltered = new BehaviorSubject<boolean>(false);
+
+  private _filterMessage = new BehaviorSubject<string>("");
+
   constructor(private http: HttpClient) {}
 
-  getInvoices(): Observable<Invoice[]> {
+  getInvoices(status?: "draft" | "pending" | "paid"): Observable<Invoice[]> {
     return this.http.get<Invoice[]>(`${this.apiUrl}`).pipe(
       tap((data) => {
         this.invoicesCount.next(data.length);
+        this.statusCount.next(
+          data.filter((invoice) => invoice.status === status).length,
+        );
       }),
     );
   }
@@ -31,5 +41,25 @@ export class InvoiceService {
   }
   getInvoiceById(id: string): Observable<Invoice> {
     return this.http.get<Invoice>(`${this.apiUrl}/${id}`);
+  }
+
+  updateInvoice(id: string, updatedInvoice: Invoice): Observable<Invoice> {
+    return this.http.put<Invoice>(`${this.apiUrl}/${id}`, updatedInvoice);
+  }
+
+  get isFiltered() {
+    return this._isFiltered.value;
+  }
+
+  set isFiltered(value: boolean) {
+    this._isFiltered.next(value);
+  }
+
+  get filterMessage() {
+    return this._filterMessage.value;
+  }
+
+  set filterMessage(message: string) {
+    this._filterMessage.next(message);
   }
 }
