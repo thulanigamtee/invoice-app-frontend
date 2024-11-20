@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { Component, Input } from "@angular/core";
-import { AlertDialogComponent } from "../alert-dialog/alert-dialog.component";
+import { Invoice } from "../../../interfaces/invoice.interface";
 
 @Component({
   selector: "app-invoice-info",
@@ -9,5 +9,5 @@ import { AlertDialogComponent } from "../alert-dialog/alert-dialog.component";
   templateUrl: "./invoice-info.component.html",
 })
 export class InvoiceInfoComponent {
-  @Input({ required: true }) invoice: any;
+  @Input() invoice!: Invoice;
 }
