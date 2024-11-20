@@ -7,6 +7,6 @@ import { Component, Input } from "@angular/core";
   templateUrl: "./button.component.html",
 })
 export class ButtonComponent {
-  @Input({ required: true }) text: string = "";
+  @Input() text!: string;
   @Input() isNewInvoiceBtn: boolean = false;
 }
