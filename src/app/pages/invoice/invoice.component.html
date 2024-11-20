@@ -6,7 +6,7 @@
     <a class="h-3 w-2 bg-[url('/assets/icon-arrow-left.svg')] bg-no-repeat"></a>
     <p class="font-bold capitalize">go back</p>
   </section>
-  @for (invoice of invoices; track invoice.id) {
+  @if (invoice) {
     <section class="px-[5%] lg:mx-auto lg:w-[730px] lg:px-0">
       <div
         class="flex h-[91px] items-center justify-between rounded-xl bg-itemsBgPrimary px-6 md:h-[88px] md:px-8"
@@ -17,11 +17,11 @@
           <p class="text-[13px] font-medium capitalize">status</p>
           <app-status-indicator [status]="invoice.status" />
         </div>
-        <!-- tablet/desktop action buttons -->
         <app-action-buttons
           [isPending]="invoice.status === 'pending' ? true : false"
           class="hidden md:block"
-          (editInvoice)="loadInvoice(invoiceId)"
+          (editInvoiceEvent)="loadInvoice()"
+          (markAsPaidEvent)="markAsPaid()"
         />
       </div>
       <div class="rounded-xl bg-itemsBgPrimary">
@@ -29,10 +29,10 @@
       </div>
     </section>
     <section class="mt-16 bg-itemsBgPrimary px-[5%] py-6 md:hidden">
-      <!-- mobile action buttons -->
       <app-action-buttons
         [isPending]="invoice.status === 'pending' ? true : false"
-        (editInvoice)="loadInvoice(invoiceId)"
+        (editInvoiceEvent)="loadInvoice()"
+        (markAsPaidEvent)="markAsPaid()"
       />
     </section>
     <app-alert-dialog [invoiceId]="invoiceId" />

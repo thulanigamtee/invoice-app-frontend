@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { InvoiceInfoComponent } from "../../components/invoice/invoice-info/invoice-info.component";
@@ -8,6 +8,7 @@ import { Invoice } from "../../interfaces/invoice.interface";
 import { AlertDialogComponent } from "../../components/invoice/alert-dialog/alert-dialog.component";
 import { InvoiceService } from "../../services/invoice.service";
 import { FormComponent } from "../../components/shared/form/form.component";
+import { Subject, takeUntil } from "rxjs";
 
 @Component({
   selector: "app-invoice",
@@ -22,30 +23,57 @@ import { FormComponent } from "../../components/shared/form/form.component";
   ],
   templateUrl: "./invoice.component.html",
 })
-export class InvoiceComponent implements OnInit {
-  invoiceId: string = "";
-  invoices: Invoice[] = [];
+export class InvoiceComponent implements OnInit, OnDestroy {
+  invoiceId!: string;
+  invoice!: Invoice;
+  private destroy$ = new Subject<void>();
+
   constructor(
-    private activatedRoute: ActivatedRoute,
+    private route: ActivatedRoute,
     private invoiceService: InvoiceService,
   ) {}
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(() => {
-      this.invoiceId = this.activatedRoute.snapshot.params["id"];
-    });
+    this.activatedRoute();
     this.getInvoice();
   }
 
-  getInvoice() {
-    this.invoiceService.getInvoices().subscribe((data) => {
-      this.invoices = data.filter((invoice) => {
-        return invoice.id === this.invoiceId;
-      });
+  activatedRoute() {
+    this.route.params.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.invoiceId = this.route.snapshot.params["id"];
     });
   }
+
+  getInvoice() {
+    this.invoiceService
+      .getInvoiceById(this.invoiceId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((invoice) => {
+        this.invoice = invoice;
+      });
+  }
+
   @ViewChild(FormComponent) formComponent!: FormComponent;
-  loadInvoice(id: string) {
-    this.formComponent.loadInvoice(id);
+  loadInvoice() {
+    this.formComponent.loadInvoice(this.invoiceId);
+  }
+
+  markAsPaid(): void {
+    if (this.invoice) {
+      this.invoice.status = "paid";
+      this.invoiceService
+        .updateInvoice(this.invoiceId, this.invoice)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          error: () => {
+            this.invoice.status = "pending"; // revert back if error occurs
+          },
+        });
+    }
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
