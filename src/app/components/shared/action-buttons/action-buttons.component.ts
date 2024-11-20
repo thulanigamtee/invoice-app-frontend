@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { ButtonComponent } from "../button/button.component";
 import { DialogService } from "../../../services/dialog.service";
-import { FormService } from "../../../services/form.service";
 
 @Component({
   selector: "app-action-buttons",
@@ -11,16 +10,21 @@ import { FormService } from "../../../services/form.service";
 })
 export class ActionButtonsComponent {
   @Input() isPending: boolean = false; // is invoice status === pending
-  @Input() invoiceId: string = "";
-  @Output() editInvoice = new EventEmitter();
+  @Input() invoiceId!: string;
+  @Output() editInvoiceEvent = new EventEmitter();
+  @Output() markAsPaidEvent = new EventEmitter();
 
-  emitEditInvoice() {
-    this.editInvoice.emit();
+  emitEditInvoiceEvent() {
+    this.editInvoiceEvent.emit();
+  }
+
+  emitMarkAsPaidEvent() {
+    this.markAsPaidEvent.emit();
   }
 
   constructor(private dialogService: DialogService) {}
 
   deleteInvoice() {
-    this.dialogService.setDialogState(true);
+    this.dialogService.dialogState = true;
   }
 }
