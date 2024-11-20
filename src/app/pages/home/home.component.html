@@ -6,10 +6,10 @@
     <section>
       <h1 class="capitalize">invoices</h1>
       @if (isFiltered()) {
-        <span
-          >{{ statusCount }} {{ filterMessage() }}
-          {{ statusCount > 1 ? "invoices" : "invoice" }}</span
-        >
+        <span>
+          {{ statusCount }} {{ filterMessage() }}
+          {{ statusCount < 1 || statusCount > 1 ? "invoices" : "invoice" }}
+        </span>
       } @else {
         <span>{{ invoicesCount }} total invoices</span>
       }
@@ -19,7 +19,7 @@
       <app-button
         [text]="isMediumWidth() ? 'new invoice' : 'new'"
         [isNewInvoiceBtn]="true"
-        class="rounded-full bg-purplePrimary pr-1"
+        class="pr-1 rounded-full bg-purplePrimary"
         (click)="showForm()"
       >
         <span
