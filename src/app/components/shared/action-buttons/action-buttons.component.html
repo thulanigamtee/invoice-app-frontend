@@ -2,20 +2,21 @@
   <app-button
     [text]="'Edit'"
     [isNewInvoiceBtn]="false"
-    class="px-4 rounded-full bg-btnBgPrimary"
-    (click)="emitEditInvoice()"
+    class="rounded-full bg-btnBgPrimary px-4"
+    (click)="emitEditInvoiceEvent()"
   />
   <app-button
     [text]="'Delete'"
     [isNewInvoiceBtn]="false"
-    class="px-6 rounded-full bg-redPrimary"
+    class="rounded-full bg-redPrimary px-6"
     (click)="deleteInvoice()"
   />
   @if (isPending) {
     <app-button
       [text]="'Mark as Paid'"
       [isNewInvoiceBtn]="false"
-      class="px-6 rounded-full bg-purplePrimary"
+      class="rounded-full bg-purplePrimary px-6"
+      (click)="emitMarkAsPaidEvent()"
     />
   }
 </div>
