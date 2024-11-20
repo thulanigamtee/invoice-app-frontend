@@ -2,7 +2,7 @@
   <section
     class="sticky flex h-20 justify-end gap-x-2 bg-itemsBgPrimary px-[5%] md:bg-[#141625]"
   >
-    <div class="flex self-center gap-x-2">
+    <div class="flex gap-x-2 self-center">
       <app-button
         [text]="'cancel'"
         class="rounded-full bg-[#373B53] px-2"
@@ -10,8 +10,8 @@
       />
       <app-button
         [text]="'save changes'"
-        class="px-2 rounded-full bg-purplePrimary"
-        (click)="emitChangesEvent()"
+        class="rounded-full bg-purplePrimary px-2"
+        (click)="emitSaveChangesEvent()"
       />
     </div>
   </section>
@@ -21,18 +21,18 @@
   >
     <app-button
       [text]="'discard'"
-      class="px-2 rounded-full bg-btnBgPrimary"
+      class="rounded-full bg-btnBgPrimary px-2"
       (click)="discardForm()"
     />
     <div class="flex gap-x-2">
       <app-button
         [text]="'Save as Draft'"
         class="rounded-full bg-[#373B53] px-2"
-        (click)="emitDraftEvent()"
+        (click)="emitSaveAsDraftEvent()"
       />
       <app-button
         [text]="'save & send'"
-        class="px-2 rounded-full bg-purplePrimary"
+        class="rounded-full bg-purplePrimary px-2"
         type="submit"
         (click)="emitSubmitEvent()"
       />
