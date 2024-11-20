@@ -20,15 +20,15 @@ export class AlertDialogComponent {
   ) {}
 
   dialogState(): boolean {
-    return this.dialogService.getDialogState();
+    return this.dialogService.dialogState;
   }
 
-  cancelDeletion() {
-    this.dialogService.setDialogState(false);
+  cancelDeletion(): void {
+    this.dialogService.dialogState = false;
   }
-  confirmDeletion() {
+  confirmDeletion(): void {
     this.invoiceService.deleteInvoice(this.invoiceId).subscribe();
-    this.dialogService.setDialogState(false);
+    this.dialogService.dialogState = false;
     this.router.navigate(["/"]);
   }
 }
