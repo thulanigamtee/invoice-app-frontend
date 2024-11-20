@@ -1,6 +1,6 @@
 <div
-  [class.active]="dialogState()"
-  class="fixed inset-0 w-full h-full bg-black bg-opacity-50 dialog backdrop-blur-sm"
+  [class.active]="dialogState"
+  class="dialog fixed inset-0 h-full w-full bg-black bg-opacity-50 backdrop-blur-sm"
 >
   <div
     class="absolute left-1/2 top-1/2 w-[87%] max-w-[480px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-lg bg-itemsBgPrimary p-7 md:p-10"
@@ -10,15 +10,15 @@
       Are you sure you want to delete invoice #{{ invoiceId }}? This action
       cannot be undone.
     </p>
-    <div class="flex justify-end mt-8 gap-x-4">
+    <div class="mt-8 flex justify-end gap-x-4">
       <app-button
         [text]="'cancel'"
-        class="px-4 rounded-full bg-btnBgPrimary"
+        class="rounded-full bg-btnBgPrimary px-4"
         (click)="cancelDeletion()"
       />
       <app-button
         [text]="'delete'"
-        class="px-4 rounded-full bg-redPrimary"
+        class="rounded-full bg-redPrimary px-4"
         (click)="confirmDeletion()"
       />
     </div>
