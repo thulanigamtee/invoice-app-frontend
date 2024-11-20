@@ -7,11 +7,11 @@ import { BehaviorSubject } from "rxjs";
 export class DialogService {
   private isActive = new BehaviorSubject<boolean>(false);
 
-  getDialogState(): boolean {
+  get dialogState() {
     return this.isActive.value;
   }
 
-  setDialogState(state: boolean): void {
+  set dialogState(state: boolean) {
     this.isActive.next(state);
   }
 }

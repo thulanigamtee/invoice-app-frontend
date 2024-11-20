@@ -6,19 +6,21 @@ import { BehaviorSubject } from "rxjs";
 })
 export class FormService {
   private isActive = new BehaviorSubject<boolean>(false);
-  private isEditMode = new BehaviorSubject<boolean>(false);
-  getFormState(): boolean {
+  private editMode = new BehaviorSubject<boolean>(false);
+
+  get formState() {
     return this.isActive.value;
   }
 
-  setFormState(state: boolean): void {
+  set formState(state: boolean) {
     this.isActive.next(state);
   }
 
-  getIsEditMode(): boolean {
-    return this.isEditMode.value;
+  get isEditMode() {
+    return this.editMode.value;
   }
-  setIsEditMode(mode: boolean): void {
-    this.isEditMode.next(mode);
+
+  set isEditMode(mode: boolean) {
+    this.editMode.next(mode);
   }
 }
