@@ -10,25 +10,29 @@ import { FormService } from "../../../../services/form.service";
 })
 export class FormButtonsComponent {
   @Output() submitEvent = new EventEmitter();
-  @Output() changesEvent = new EventEmitter();
-  @Output() draftEvent = new EventEmitter();
-  emitSubmitEvent() {
+  @Output() saveChangesEvent = new EventEmitter();
+  @Output() saveAsDraftEvent = new EventEmitter();
+
+  emitSubmitEvent(): void {
     this.submitEvent.emit();
   }
-  emitChangesEvent() {
-    this.changesEvent.emit();
+
+  emitSaveChangesEvent(): void {
+    this.saveChangesEvent.emit();
   }
-  emitDraftEvent() {
-    this.draftEvent.emit();
+
+  emitSaveAsDraftEvent(): void {
+    this.saveAsDraftEvent.emit();
   }
 
   constructor(private formService: FormService) {}
 
   isEditMode(): boolean {
-    return this.formService.getIsEditMode();
+    return this.formService.isEditMode;
   }
+
   discardForm(): void {
-    this.formService.setFormState(false);
+    this.formService.formState = false;
     document.body.classList.remove("no-scroll");
   }
 }
