@@ -6,6 +6,7 @@ import { StatusIndicatorComponent } from "../../shared/status-indicator/status-i
 import { InvoiceService } from "../../../services/invoice.service";
 import { NoInvoicesComponent } from "../no-invoices/no-invoices.component";
 import { LoaderComponent } from "../../shared/loader/loader.component";
+import { Subject, takeUntil } from "rxjs";
 
 @Component({
   selector: "app-invoice-item",
@@ -23,6 +24,7 @@ export class InvoiceItemComponent {
   invoices: Invoice[] = [];
   invoicesCount: number = 0;
   isLoading: boolean = true;
+  private destroy$ = new Subject<void>();
 
   constructor(private invoiceService: InvoiceService) {}
 
@@ -30,44 +32,44 @@ export class InvoiceItemComponent {
     this.getInvoices();
   }
 
-  getInvoices() {
-    this.invoiceService.getInvoices().subscribe((data) => {
-      this.invoices = data;
-      this.invoicesCount = data.length;
-      this.isLoading = false;
-    });
+  getInvoices(status?: "draft" | "pending" | "paid"): void {
+    this.invoiceService
+      .getInvoices(status)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data) => {
+        this.invoices = data;
+        this.invoicesCount = data.length;
+        this.isLoading = false;
+      });
   }
-
-  filteredInvoices: Invoice[] = [];
-  statusCounts: { draft: number; pending: number; paid: number } = {
-    draft: 0,
-    pending: 0,
-    paid: 0,
-  };
-
   filterByStatus(event: {
     status: "draft" | "pending" | "paid";
     isChecked: boolean;
-  }) {
+  }): void {
     if (!event.isChecked) {
-      this.invoiceService.getInvoices().subscribe((data) => {
-        this.invoices = data.filter(
-          (invoice) => invoice.status === event.status,
-        );
-      });
+      this.invoiceService
+        .getInvoices(event.status)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((data) => {
+          this.invoices = data.filter(
+            (invoice) => invoice.status === event.status,
+          );
+        });
+      this.invoiceService.isFiltered = true;
+      this.invoiceService.filterMessage = event.status;
     } else {
-      this.invoiceService.getInvoices().subscribe((data) => {
-        this.invoices = data;
-      });
+      this.invoiceService
+        .getInvoices()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((data) => {
+          this.invoices = data;
+        });
+      this.invoiceService.isFiltered = false;
     }
-    this.statusCounts.draft = this.invoices.filter(
-      (draft) => draft.status === "draft",
-    ).length;
-    this.statusCounts.pending = this.invoices.filter(
-      (pending) => pending.status === "pending",
-    ).length;
-    this.statusCounts.paid = this.invoices.filter(
-      (paid) => paid.status === "paid",
-    ).length;
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
