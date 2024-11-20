@@ -5,7 +5,14 @@
   >
     <section>
       <h1 class="capitalize">invoices</h1>
-      <span>{{ invoicesCount }} total invoices</span>
+      @if (isFiltered()) {
+        <span
+          >{{ statusCount }} {{ filterMessage() }}
+          {{ statusCount > 1 ? "invoices" : "invoice" }}</span
+        >
+      } @else {
+        <span>{{ invoicesCount }} total invoices</span>
+      }
     </section>
     <section class="flex items-center gap-x-4 md:gap-x-10">
       <app-drop-down (filterEvent)="filterByStatus($event)" />
