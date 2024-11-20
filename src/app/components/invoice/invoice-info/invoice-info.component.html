@@ -50,21 +50,21 @@
         <span class="font-medium capitalize text-end">price</span>
         <span class="font-medium capitalize text-end">total</span>
       </div>
-      @for (item of invoice.items; track item.id) {
+      @for (item of invoice.items; track invoice.id) {
         <li class="flex items-center justify-between md:hidden">
           <div>
             <p>{{ item.name }}</p>
             <p class="text-[#888EB0]">
-              {{ item.quantity }} x {{ item.price | currency: "R " }}
+              {{ item.quantity }} x {{ item.price | currency: "GBP" }}
             </p>
           </div>
-          <p>{{ item.total | currency: "R " }}</p>
+          <p>{{ item.total | currency: "GBP" }}</p>
         </li>
         <li class="hidden md:grid md:grid-cols-4">
           <p>{{ item.name }}</p>
           <p class="text-center">{{ item.quantity }}</p>
-          <p class="text-end">{{ item.price | currency: "R " }}</p>
-          <p class="text-end">{{ item.total | currency: "R " }}</p>
+          <p class="text-end">{{ item.price | currency: "GBP" }}</p>
+          <p class="text-end">{{ item.total | currency: "GBP" }}</p>
         </li>
       }
     </ul>
@@ -72,7 +72,7 @@
       class="flex items-center justify-between rounded-b-xl bg-[#0C0E16] p-6"
     >
       <span class="font-medium text-white capitalize">amount due</span>
-      <p class="text-2xl">{{ invoice.total | currency: "R  " }}</p>
+      <p class="text-2xl">{{ invoice.total | currency: "GBP" }}</p>
     </div>
   </div>
 </div>
