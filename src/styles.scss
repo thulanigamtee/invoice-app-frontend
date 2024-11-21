@@ -84,6 +84,10 @@ img{
   @include fadeIn(block);
 }
 
+.toast {
+  @include fadeIn(block);
+}
+
 .loader {
   width: 50px;
   aspect-ratio: 1;
