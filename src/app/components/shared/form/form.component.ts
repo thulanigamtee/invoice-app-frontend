@@ -15,7 +15,8 @@ import { FormService } from "../../../services/form.service";
 import { InvoiceService } from "../../../services/invoice.service";
 import { FormButtonsComponent } from "./form-buttons/form-buttons.component";
 import { Invoice } from "../../../interfaces/invoice.interface";
-import { Subject, takeUntil } from "rxjs";
+import { Subject, takeUntil, timeout } from "rxjs";
+import { ToastService } from "../../../services/toast.service";
 
 @Component({
   selector: "app-form",
@@ -33,6 +34,8 @@ import { Subject, takeUntil } from "rxjs";
 })
 export class FormComponent implements OnInit, OnDestroy {
   invoiceForm!: FormGroup;
+  isEditMode!: boolean;
+  formState!: boolean;
   private destroy$ = new Subject<void>();
 
   isActive: boolean = false;
@@ -47,18 +50,25 @@ export class FormComponent implements OnInit, OnDestroy {
     { id: 3, value: "net 30 days", isActive: true },
   ];
 
-  formState(): boolean {
-    return this.formService.formState;
-  }
-
   constructor(
     private formBuilder: FormBuilder,
     private formService: FormService,
     private invoiceService: InvoiceService,
+    private toastService: ToastService,
   ) {}
 
   ngOnInit() {
     this.initialiseForm();
+    this.formService.isEditMode$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((mode) => {
+        this.isEditMode = mode;
+      });
+    this.formService.isActive$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((state) => {
+        this.formState = state;
+      });
   }
 
   initialiseForm() {
@@ -88,10 +98,6 @@ export class FormComponent implements OnInit, OnDestroy {
     });
   }
 
-  isEditMode(): boolean {
-    return this.formService.isEditMode;
-  }
-
   get items(): FormArray {
     return this.invoiceForm.get("items") as FormArray;
   }
@@ -103,6 +109,7 @@ export class FormComponent implements OnInit, OnDestroy {
   loadInvoice(id: string): void {
     this.formService.isEditMode = true;
     this.formService.formState = true;
+    document.body.classList.add("no-scroll");
     this.invoiceService
       .getInvoiceById(id)
       .pipe(takeUntil(this.destroy$))
@@ -129,13 +136,25 @@ export class FormComponent implements OnInit, OnDestroy {
   }
 
   submitForm(): void {
-    if (this.isEditMode()) {
+    if (this.isEditMode) {
       this.saveChanges();
     } else {
       this.invoiceService
         .createInvoice(this.invoiceForm.value)
         .pipe(takeUntil(this.destroy$))
-        .subscribe();
+        .subscribe({
+          next: () => {
+            this.formService.formState = false;
+            setTimeout(() => {
+              this.toastService.toastState = true;
+            }, 500);
+            this.toastService.message = "invoice successfully created";
+            setTimeout(() => {
+              this.toastService.toastState = false;
+            }, 2000);
+          },
+          error: () => {},
+        });
     }
   }
 
@@ -144,7 +163,14 @@ export class FormComponent implements OnInit, OnDestroy {
     this.invoiceService
       .updateInvoice(id, this.invoiceForm.value)
       .pipe(takeUntil(this.destroy$))
-      .subscribe();
+      .subscribe({
+        next: () => {
+          console.log("invoice updated");
+        },
+        error: () => {
+          console.log("update failed");
+        },
+      });
   }
 
   saveAsDraft() {}
