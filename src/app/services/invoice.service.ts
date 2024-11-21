@@ -16,8 +16,10 @@ export class InvoiceService {
   statusCount$ = this.statusCount.asObservable();
 
   private _isFiltered = new BehaviorSubject<boolean>(false);
+  isFiltered$ = this._isFiltered.asObservable();
 
   private _filterMessage = new BehaviorSubject<string>("");
+  filterMessage$ = this._filterMessage.asObservable();
 
   constructor(private http: HttpClient) {}
 
