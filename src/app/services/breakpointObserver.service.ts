@@ -6,7 +6,8 @@ import { BehaviorSubject, map } from "rxjs";
   providedIn: "root",
 })
 export class BreakpointObserverService {
-  public isMediumWidth = new BehaviorSubject<boolean>(false);
+  private isMediumWidth = new BehaviorSubject<boolean>(false);
+  isMediumWidth$ = this.isMediumWidth.asObservable();
 
   constructor(private breakpointObserver: BreakpointObserver) {}
 
