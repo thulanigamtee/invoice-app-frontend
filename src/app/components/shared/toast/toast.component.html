@@ -1,1 +1,6 @@
-<p>toast works!</p>
+<div
+  [class.active]="toastState"
+  class="toast absolute left-[50%] top-2 translate-x-[-50%] rounded-lg bg-green-500 px-4 py-2"
+>
+  <p>{{ message }}</p>
+</div>
