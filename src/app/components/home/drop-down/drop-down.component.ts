@@ -1,7 +1,14 @@
 import { CommonModule } from "@angular/common";
-import { Component, EventEmitter, Output } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from "@angular/core";
 import { OutsideClickDirective } from "../../../directives/outside-click.directive";
 import { BreakpointObserverService } from "../../../services/breakpointObserver.service";
+import { Subject, takeUntil } from "rxjs";
 
 @Component({
   selector: "app-drop-down",
@@ -9,25 +16,42 @@ import { BreakpointObserverService } from "../../../services/breakpointObserver.
   imports: [CommonModule, OutsideClickDirective],
   templateUrl: "./drop-down.component.html",
 })
-export class DropDownComponent {
+export class DropDownComponent implements OnInit, OnDestroy {
   @Output() isActiveEvent = new EventEmitter<boolean>();
-  isActive: boolean = false;
 
-  emitIsActiveEvent(): void {
+  @Output() filterEvent = new EventEmitter<{
+    status: "draft" | "pending" | "paid";
+    isChecked: boolean;
+  }>();
+
+  isActive!: boolean;
+  isMediumWidth!: boolean;
+  private destroy$ = new Subject<void>();
+
+  emitIsActiveEvent() {
     this.isActiveEvent.emit(this.isActive);
   }
 
-  toggleDropDown(): void {
+  toggleDropDown() {
     this.isActive = !this.isActive;
     this.emitIsActiveEvent();
   }
 
-  outsideClick(): void {
+  outsideClick() {
     this.isActive = false;
     this.emitIsActiveEvent();
   }
 
-  constructor(private breakpointObserver: BreakpointObserverService) {}
+  constructor(private breakpointObserverService: BreakpointObserverService) {}
+
+  ngOnInit() {
+    this.breakpointObserverService.observeBreakpoint();
+    this.breakpointObserverService.isMediumWidth$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((isMediumWidth) => {
+        this.isMediumWidth = isMediumWidth;
+      });
+  }
 
   options: {
     id: number;
@@ -39,17 +63,12 @@ export class DropDownComponent {
     { id: 2, value: "paid", checked: false },
   ];
 
-  updateStatus(id: number): void {
+  updateStatus(id: number) {
     this.options = this.options.map((option) => ({
       ...option,
       checked: option.id === id ? !option.checked : false,
     }));
   }
-
-  @Output() filterEvent = new EventEmitter<{
-    status: "draft" | "pending" | "paid";
-    isChecked: boolean;
-  }>();
 
   emitFilterEvent(
     event: { status: "draft" | "pending" | "paid"; isChecked: boolean },
@@ -59,15 +78,8 @@ export class DropDownComponent {
     this.updateStatus(id);
   }
 
-  ngOnInit(): void {
-    this.observeBreakpoint();
-  }
-
-  isMediumWidth(): boolean {
-    return this.breakpointObserver.isMediumWidth.value;
-  }
-
-  observeBreakpoint(): void {
-    this.breakpointObserver.observeBreakpoint();
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
