@@ -22,16 +22,29 @@ import { Subject, takeUntil } from "rxjs";
 export class HomeComponent implements OnInit, OnDestroy {
   invoicesCount: number = 0;
   statusCount: number = 0;
+  isFiltered!: boolean;
+  filterMessage!: string;
+  isMediumWidth!: boolean;
   private destroy$ = new Subject<void>();
 
   constructor(
-    private breakpointObserver: BreakpointObserverService,
+    private breakpointObserverService: BreakpointObserverService,
     private formService: FormService,
     private invoiceService: InvoiceService,
   ) {}
 
   ngOnInit() {
-    this.observeBreakpoint();
+    this.breakpointObserverService.observeBreakpoint();
+    this.breakpointObserverService.isMediumWidth$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((isMediumWidth) => {
+        this.isMediumWidth = isMediumWidth;
+      });
+    this.invoiceInformation();
+    this.filterInformation();
+  }
+
+  invoiceInformation() {
     this.invoiceService.invoicesCount$
       .pipe(takeUntil(this.destroy$))
       .subscribe((count) => {
@@ -44,19 +57,20 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
   }
 
-  isMediumWidth(): boolean {
-    return this.breakpointObserver.isMediumWidth.value;
+  filterInformation() {
+    this.invoiceService.filterMessage$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((message) => {
+        this.filterMessage = message;
+      });
+    this.invoiceService.isFiltered$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((isFiltered) => {
+        this.isFiltered = isFiltered;
+      });
   }
 
-  observeBreakpoint(): void {
-    this.breakpointObserver.observeBreakpoint();
-  }
-
-  formState(): boolean {
-    return this.formService.formState;
-  }
-
-  showForm(): void {
+  showForm() {
     this.formService.formState = true;
     this.formService.isEditMode = false;
     document.body.classList.add("no-scroll");
@@ -66,16 +80,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   filterByStatus(event: {
     status: "draft" | "pending" | "paid";
     isChecked: boolean;
-  }): void {
+  }) {
     this.invoiceItem.filterByStatus(event);
-  }
-
-  isFiltered(): boolean {
-    return this.invoiceService.isFiltered;
-  }
-
-  filterMessage(): string {
-    return this.invoiceService.filterMessage;
   }
 
   ngOnDestroy() {
