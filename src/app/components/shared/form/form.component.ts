@@ -15,8 +15,9 @@ import { FormService } from "../../../services/form.service";
 import { InvoiceService } from "../../../services/invoice.service";
 import { FormButtonsComponent } from "./form-buttons/form-buttons.component";
 import { Invoice } from "../../../interfaces/invoice.interface";
-import { Subject, takeUntil, timeout } from "rxjs";
+import { Subject, takeUntil } from "rxjs";
 import { ToastService } from "../../../services/toast.service";
+import { FormDropDownComponent } from "./form-drop-down/form-drop-down.component";
 
 @Component({
   selector: "app-form",
@@ -29,6 +30,7 @@ import { ToastService } from "../../../services/toast.service";
     ItemsComponent,
     InputComponent,
     FormButtonsComponent,
+    FormDropDownComponent,
   ],
   templateUrl: "./form.component.html",
 })
@@ -37,18 +39,6 @@ export class FormComponent implements OnInit, OnDestroy {
   isEditMode!: boolean;
   formState!: boolean;
   private destroy$ = new Subject<void>();
-
-  isActive: boolean = false;
-  toggleDropdown() {
-    this.isActive = !this.isActive;
-  }
-
-  options: { id: number; value: string; isActive: boolean }[] = [
-    { id: 0, value: "net 1 day", isActive: false },
-    { id: 1, value: "net 7 days", isActive: false },
-    { id: 2, value: "net 14 days", isActive: true },
-    { id: 3, value: "net 30 days", isActive: true },
-  ];
 
   constructor(
     private formBuilder: FormBuilder,
