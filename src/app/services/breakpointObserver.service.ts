@@ -11,7 +11,7 @@ export class BreakpointObserverService {
 
   constructor(private breakpointObserver: BreakpointObserver) {}
 
-  observeBreakpoint(): void {
+  observeBreakpoint() {
     this.breakpointObserver
       .observe("(min-width: 768px)")
       .pipe(map((result) => result.matches))
