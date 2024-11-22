@@ -58,7 +58,7 @@ export class InvoiceComponent implements OnInit, OnDestroy {
     this.formComponent.loadInvoice(this.invoiceId);
   }
 
-  markAsPaid(): void {
+  markAsPaid() {
     if (this.invoice) {
       this.invoice.status = "paid";
       this.invoiceService
