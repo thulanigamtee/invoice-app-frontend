@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Invoice } from "../../../interfaces/invoice.interface";
 import { CommonModule } from "@angular/common";
 import { RouterLink } from "@angular/router";
@@ -20,7 +20,7 @@ import { Subject, takeUntil } from "rxjs";
   ],
   templateUrl: "./invoice-item.component.html",
 })
-export class InvoiceItemComponent {
+export class InvoiceItemComponent implements OnInit, OnDestroy {
   invoices: Invoice[] = [];
   invoicesCount: number = 0;
   isLoading: boolean = true;
@@ -28,11 +28,11 @@ export class InvoiceItemComponent {
 
   constructor(private invoiceService: InvoiceService) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.getInvoices();
   }
 
-  getInvoices(status?: "draft" | "pending" | "paid"): void {
+  getInvoices(status?: "draft" | "pending" | "paid") {
     this.invoiceService
       .getInvoices(status)
       .pipe(takeUntil(this.destroy$))
@@ -45,7 +45,7 @@ export class InvoiceItemComponent {
   filterByStatus(event: {
     status: "draft" | "pending" | "paid";
     isChecked: boolean;
-  }): void {
+  }) {
     if (!event.isChecked) {
       this.invoiceService
         .getInvoices(event.status)
