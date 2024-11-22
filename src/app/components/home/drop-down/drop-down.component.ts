@@ -32,6 +32,14 @@ export class DropDownComponent implements OnInit, OnDestroy {
     this.isActiveEvent.emit(this.isActive);
   }
 
+  emitFilterEvent(
+    event: { status: "draft" | "pending" | "paid"; isChecked: boolean },
+    id: number,
+  ): void {
+    this.filterEvent.emit(event);
+    this.updateStatus(id);
+  }
+
   toggleDropDown() {
     this.isActive = !this.isActive;
     this.emitIsActiveEvent();
@@ -68,14 +76,6 @@ export class DropDownComponent implements OnInit, OnDestroy {
       ...option,
       checked: option.id === id ? !option.checked : false,
     }));
-  }
-
-  emitFilterEvent(
-    event: { status: "draft" | "pending" | "paid"; isChecked: boolean },
-    id: number,
-  ): void {
-    this.filterEvent.emit(event);
-    this.updateStatus(id);
   }
 
   ngOnDestroy() {
