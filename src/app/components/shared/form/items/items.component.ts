@@ -20,11 +20,12 @@ export class ItemsComponent implements OnInit {
   @Output() totalUpdated = new EventEmitter<number>();
 
   constructor(private formBuilder: FormBuilder) {}
-  ngOnInit(): void {
+
+  ngOnInit() {
     if (!this.items) this.items = this.formBuilder.array([]);
   }
 
-  addItem(): void {
+  addItem() {
     const item: FormGroup = this.formBuilder.group({
       name: ["", Validators.required],
       quantity: [1, [Validators.required, Validators.min(1)]],
@@ -34,12 +35,12 @@ export class ItemsComponent implements OnInit {
     this.items.push(item);
   }
 
-  removeItem(index: number): void {
+  removeItem(index: number) {
     this.items.removeAt(index);
     this.updateTotal();
   }
 
-  updateTotal(): void {
+  updateTotal() {
     const total = this.items.controls.reduce((acc: any, item: any) => {
       const quantity = item.get("quantity")?.value || 0;
       const price = item.get("price")?.value || 0;
