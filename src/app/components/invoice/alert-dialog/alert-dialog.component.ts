@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import { ButtonComponent } from "../../shared/button/button.component";
 import { InvoiceService } from "../../../services/invoice.service";
 import { DialogService } from "../../../services/dialog.service";
@@ -12,7 +12,7 @@ import { ToastService } from "../../../services/toast.service";
   imports: [ButtonComponent],
   templateUrl: "./alert-dialog.component.html",
 })
-export class AlertDialogComponent implements OnInit {
+export class AlertDialogComponent implements OnInit, OnDestroy {
   @Input() invoiceId!: string;
   dialogState!: boolean;
   private destroy$ = new Subject<void>();
@@ -32,11 +32,11 @@ export class AlertDialogComponent implements OnInit {
       });
   }
 
-  cancelDeletion(): void {
+  cancelDeletion() {
     this.dialogService.dialogState = false;
   }
 
-  confirmDeletion(): void {
+  confirmDeletion() {
     this.invoiceService
       .deleteInvoice(this.invoiceId)
       .pipe(takeUntil(this.destroy$))
