@@ -13,25 +13,25 @@ export class FormButtonsComponent {
   @Output() saveChangesEvent = new EventEmitter();
   @Output() saveAsDraftEvent = new EventEmitter();
 
-  emitSubmitEvent(): void {
+  emitSubmitEvent() {
     this.submitEvent.emit();
   }
 
-  emitSaveChangesEvent(): void {
+  emitSaveChangesEvent() {
     this.saveChangesEvent.emit();
   }
 
-  emitSaveAsDraftEvent(): void {
+  emitSaveAsDraftEvent() {
     this.saveAsDraftEvent.emit();
   }
 
   constructor(private formService: FormService) {}
 
-  isEditMode(): boolean {
+  isEditMode() {
     return this.formService.isEditMode;
   }
 
-  discardForm(): void {
+  discardForm() {
     this.formService.formState = false;
     document.body.classList.remove("no-scroll");
   }
