@@ -39,7 +39,7 @@ export class FormComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   isActive: boolean = false;
-  toggleDropdown(): void {
+  toggleDropdown() {
     this.isActive = !this.isActive;
   }
 
@@ -102,11 +102,11 @@ export class FormComponent implements OnInit, OnDestroy {
     return this.invoiceForm.get("items") as FormArray;
   }
 
-  onTotalUpdated(newTotal: number): void {
+  onTotalUpdated(newTotal: number) {
     this.invoiceForm.get("total")?.setValue(newTotal);
   }
 
-  loadInvoice(id: string): void {
+  loadInvoice(id: string) {
     this.formService.isEditMode = true;
     this.formService.formState = true;
     document.body.classList.add("no-scroll");
@@ -135,7 +135,7 @@ export class FormComponent implements OnInit, OnDestroy {
     });
   }
 
-  submitForm(): void {
+  submitForm() {
     if (this.isEditMode) {
       this.saveChanges();
     } else {
