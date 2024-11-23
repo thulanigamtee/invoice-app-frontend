@@ -11,6 +11,9 @@ export class FormService {
   private _isEditMode = new BehaviorSubject<boolean>(false);
   isEditMode$ = this._isEditMode.asObservable();
 
+  private _paymentTerm = new BehaviorSubject<number>(30);
+  paymentTerm$ = this._paymentTerm.asObservable();
+
   get formState() {
     return this.isActive.value;
   }
@@ -25,5 +28,13 @@ export class FormService {
 
   set isEditMode(mode: boolean) {
     this._isEditMode.next(mode);
+  }
+
+  get paymentTerm() {
+    return this._paymentTerm.value;
+  }
+
+  set paymentTerm(term: number) {
+    this._paymentTerm.next(term);
   }
 }
