@@ -66,12 +66,13 @@ export class FormComponent implements OnInit, OnDestroy {
           this.invoiceForm.get("paymentTerms")?.setValue(term);
         });
     }
+    this.invoiceForm.get("status")?.setValue("pending");
   }
 
   initialiseForm() {
     this.invoiceForm = this.formBuilder.group({
       id: [""],
-      createdAt: ["", Validators.required],
+      createdAt: [new Date(), Validators.required],
       paymentDue: ["", Validators.required],
       description: ["", Validators.required],
       paymentTerms: [0, Validators.required],
@@ -90,8 +91,8 @@ export class FormComponent implements OnInit, OnDestroy {
         postCode: ["", Validators.required],
         country: ["", Validators.required],
       }),
-      items: this.formBuilder.array([]),
-      total: [],
+      items: this.formBuilder.array([], [Validators.required]),
+      total: [0],
     });
   }
 
@@ -137,10 +138,12 @@ export class FormComponent implements OnInit, OnDestroy {
     if (this.isEditMode) {
       this.saveChanges();
     } else {
-      this.createInvoice();
+      if (this.invoiceForm.valid) this.createInvoice();
     }
   }
+
   createInvoice() {
+    this.invoiceForm.get("status")?.setValue("pending");
     this.invoiceService
       .createInvoice(this.invoiceForm.value)
       .pipe(takeUntil(this.destroy$))
@@ -156,7 +159,9 @@ export class FormComponent implements OnInit, OnDestroy {
             this.toastService.toastState = false;
           }, 2000);
         },
-        error: () => {},
+        error: () => {
+          this.toastService.message = "error creating invoice";
+        },
       });
   }
 
@@ -178,12 +183,33 @@ export class FormComponent implements OnInit, OnDestroy {
           }, 2000);
         },
         error: () => {
-          console.log("update failed");
+          this.toastService.message = "error updating invoice";
         },
       });
   }
 
-  saveAsDraft() {}
+  saveAsDraft() {
+    this.invoiceForm.get("status")?.setValue("draft");
+    this.invoiceService
+      .createInvoice(this.invoiceForm.value)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.formService.formState = false;
+          document.body.classList.remove("no-scroll");
+          setTimeout(() => {
+            this.toastService.toastState = true;
+          }, 500);
+          this.toastService.message = "draft successfully created";
+          setTimeout(() => {
+            this.toastService.toastState = false;
+          }, 2000);
+        },
+        error: () => {
+          this.toastService.message = "error creating invoice";
+        },
+      });
+  }
 
   ngOnDestroy() {
     this.destroy$.next();
