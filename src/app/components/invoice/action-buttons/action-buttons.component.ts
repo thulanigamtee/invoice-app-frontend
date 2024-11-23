@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { ButtonComponent } from "../button/button.component";
+import { ButtonComponent } from "../../shared/button/button.component";
 import { DialogService } from "../../../services/dialog.service";
 
 @Component({
