@@ -1,21 +1,26 @@
 <div class="relative flex flex-col gap-y-1">
   <span class="capitalize text-[#888EB0]">payment terms</span>
   <button
-    (click)="toggleDropdown()"
     class="flex h-12 items-center justify-between rounded-lg bg-itemsBgPrimary px-6"
+    (click)="toggleDropdown()"
   >
-    <p class="capitalize">net 30 days</p>
+    <p class="capitalize">
+      net {{ paymentTerm }} {{ paymentTerm === 1 ? "day" : "days" }}
+    </p>
     <img src="/assets/icon-arrow-down.svg" alt="icon-arrow-down" />
   </button>
   <ul
-    class="form-drop-down absolute mt-20 rounded-lg bg-itemsBgPrimary"
+    class="form-drop-down absolute mt-20 w-full rounded-lg bg-itemsBgPrimary"
     [class.active]="isActive"
   >
     @for (option of options; track $index) {
       <li
-        class="border-b-[1px] border-itemsBgSecondary px-6 py-3 last-of-type:border-none"
+        (click)="setPaymentTerm(option.value)"
+        class="border-b-[1px] border-btnBgPrimary px-6 py-3 last-of-type:border-none"
       >
-        <p class="capitalize">{{ option.value }}</p>
+        <p class="capitalize">
+          net {{ option.value }} {{ option.value === 1 ? "day" : "days" }}
+        </p>
       </li>
     }
   </ul>
