@@ -59,6 +59,13 @@ export class FormComponent implements OnInit, OnDestroy {
       .subscribe((state) => {
         this.formState = state;
       });
+    if (!this.isEditMode) {
+      this.formService.paymentTerm$
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((term) => {
+          this.invoiceForm.get("paymentTerms")?.setValue(term);
+        });
+    }
   }
 
   initialiseForm() {
@@ -105,6 +112,7 @@ export class FormComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((invoice) => {
         this.invoiceForm.patchValue(invoice);
+        this.formService.paymentTerm = invoice.paymentTerms;
 
         const itemsFormArray = this.invoiceForm.get("items") as FormArray;
         itemsFormArray.clear();
@@ -129,23 +137,27 @@ export class FormComponent implements OnInit, OnDestroy {
     if (this.isEditMode) {
       this.saveChanges();
     } else {
-      this.invoiceService
-        .createInvoice(this.invoiceForm.value)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: () => {
-            this.formService.formState = false;
-            setTimeout(() => {
-              this.toastService.toastState = true;
-            }, 500);
-            this.toastService.message = "invoice successfully created";
-            setTimeout(() => {
-              this.toastService.toastState = false;
-            }, 2000);
-          },
-          error: () => {},
-        });
+      this.createInvoice();
     }
+  }
+  createInvoice() {
+    this.invoiceService
+      .createInvoice(this.invoiceForm.value)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.formService.formState = false;
+          document.body.classList.remove("no-scroll");
+          setTimeout(() => {
+            this.toastService.toastState = true;
+          }, 500);
+          this.toastService.message = "invoice successfully created";
+          setTimeout(() => {
+            this.toastService.toastState = false;
+          }, 2000);
+        },
+        error: () => {},
+      });
   }
 
   saveChanges() {
@@ -155,7 +167,15 @@ export class FormComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
-          console.log("invoice updated");
+          this.formService.formState = false;
+          document.body.classList.remove("no-scroll");
+          setTimeout(() => {
+            this.toastService.toastState = true;
+          }, 500);
+          this.toastService.message = "invoice successfully updated";
+          setTimeout(() => {
+            this.toastService.toastState = false;
+          }, 2000);
         },
         error: () => {
           console.log("update failed");
