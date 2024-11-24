@@ -11,7 +11,7 @@
       <app-button
         [text]="'save changes'"
         class="rounded-full bg-purplePrimary px-2"
-        (click)="emitSaveChangesEvent()"
+        (click)="saveChanges()"
       />
     </div>
   </section>
@@ -28,13 +28,13 @@
       <app-button
         [text]="'Save as Draft'"
         class="rounded-full bg-[#373B53] px-2"
-        (click)="emitSaveAsDraftEvent()"
+        (click)="saveAsDraft()"
       />
       <app-button
         [text]="'save & send'"
         class="rounded-full bg-purplePrimary px-2"
         type="submit"
-        (click)="emitSubmitEvent()"
+        (click)="createInvoice()"
       />
     </div>
   </section>
