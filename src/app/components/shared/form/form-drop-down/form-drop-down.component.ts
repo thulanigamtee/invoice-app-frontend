@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormService } from "../../../../services/form.service";
 import { Subject, takeUntil } from "rxjs";
+import { OutsideClickDirective } from "../../../../directives/outside-click.directive";
 
 @Component({
   selector: "app-form-drop-down",
   standalone: true,
-  imports: [],
+  imports: [OutsideClickDirective],
   templateUrl: "./form-drop-down.component.html",
 })
 export class FormDropDownComponent implements OnInit, OnDestroy {
@@ -29,6 +30,10 @@ export class FormDropDownComponent implements OnInit, OnDestroy {
 
   toggleDropdown() {
     this.isActive = !this.isActive;
+  }
+
+  outsideClick() {
+    this.isActive = false;
   }
 
   ngOnInit() {

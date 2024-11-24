@@ -1,4 +1,8 @@
-<div class="relative flex flex-col gap-y-1">
+<div
+  class="relative flex flex-col gap-y-1"
+  OutsideClick
+  (outsideClick)="outsideClick()"
+>
   <span class="capitalize text-[#888EB0]">payment terms</span>
   <button
     class="flex h-12 items-center justify-between rounded-lg bg-itemsBgPrimary px-6"
@@ -18,7 +22,7 @@
         (click)="setPaymentTerm(option.value)"
         class="border-b-[1px] border-btnBgPrimary px-6 py-3 last-of-type:border-none"
       >
-        <p class="capitalize">
+        <p class="capitalize hover:text-purplePrimary">
           net {{ option.value }} {{ option.value === 1 ? "day" : "days" }}
         </p>
       </li>
