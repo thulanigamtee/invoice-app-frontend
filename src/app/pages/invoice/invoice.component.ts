@@ -36,6 +36,7 @@ export class InvoiceComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.activatedRoute();
     this.getInvoice();
+    this.invoiceService.isFiltered = false;
   }
 
   activatedRoute() {
