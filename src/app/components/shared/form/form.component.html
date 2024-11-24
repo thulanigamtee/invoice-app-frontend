@@ -65,11 +65,7 @@
         </div>
         <app-items [items]="items" (totalUpdated)="onTotalUpdated($event)" />
       </section>
-      <app-form-buttons
-        (submitEvent)="submitForm()"
-        (saveChangesEvent)="submitForm()"
-        (saveAsDraftEvent)="saveAsDraft()"
-      />
+      <app-form-buttons [form]="invoiceForm" />
     </form>
   </div>
 </section>
