@@ -11,7 +11,13 @@
           {{ statusCount < 1 || statusCount > 1 ? "invoices" : "invoice" }}
         </span>
       } @else {
-        <span>{{ invoicesCount }} total invoices</span>
+        <span>
+          {{
+            invoicesCount === 0
+              ? "No invoices"
+              : invoicesCount + " total invoices"
+          }}
+        </span>
       }
     </section>
     <section class="flex items-center gap-x-4 md:gap-x-10">
