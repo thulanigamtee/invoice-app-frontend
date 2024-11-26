@@ -39,7 +39,12 @@ export class InvoiceItemComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         this.invoices = data;
         this.invoicesCount = data.length;
-        this.isLoading = false;
+        this.invoiceService.isLoading = false;
+      });
+    this.invoiceService.isLoading$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((loading) => {
+        this.isLoading = loading;
       });
   }
   filterByStatus(event: {
