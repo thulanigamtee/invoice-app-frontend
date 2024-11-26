@@ -21,6 +21,9 @@ export class InvoiceService {
   private _filterMessage = new BehaviorSubject<string>("");
   filterMessage$ = this._filterMessage.asObservable();
 
+  private _isLoading = new BehaviorSubject<boolean>(true);
+  isLoading$ = this._isLoading.asObservable();
+
   constructor(private http: HttpClient) {}
 
   getInvoices(status?: "draft" | "pending" | "paid"): Observable<Invoice[]> {
@@ -63,5 +66,13 @@ export class InvoiceService {
 
   set filterMessage(message: string) {
     this._filterMessage.next(message);
+  }
+
+  get isLoading() {
+    return this._isLoading.value;
+  }
+
+  set isLoading(isLoading: boolean) {
+    this._isLoading.next(isLoading);
   }
 }
