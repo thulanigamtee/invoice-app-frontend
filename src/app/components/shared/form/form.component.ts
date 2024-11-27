@@ -15,7 +15,7 @@ import { FormService } from "../../../services/form.service";
 import { InvoiceService } from "../../../services/invoice.service";
 import { FormButtonsComponent } from "./form-buttons/form-buttons.component";
 import { Invoice } from "../../../interfaces/invoice.interface";
-import { Subject, takeUntil } from "rxjs";
+import { Subject, take, takeUntil } from "rxjs";
 import { FormDropDownComponent } from "./form-drop-down/form-drop-down.component";
 
 @Component({
@@ -47,22 +47,16 @@ export class FormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initialiseForm();
-    this.formService.isEditMode$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((mode) => {
-        this.isEditMode = mode;
-      });
-    this.formService.isActive$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((state) => {
-        this.formState = state;
-      });
+    this.formService.isEditMode$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (mode) => (this.isEditMode = mode),
+    });
+    this.formService.isActive$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (state) => (this.formState = state),
+    });
     if (!this.isEditMode) {
-      this.formService.paymentTerm$
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((term) => {
-          this.invoiceForm.get("paymentTerms")?.setValue(term);
-        });
+      this.formService.paymentTerm$.pipe(takeUntil(this.destroy$)).subscribe({
+        next: (term) => this.invoiceForm.get("paymentTerms")?.setValue(term),
+      });
     }
     this.invoiceForm.get("status")?.setValue("pending");
   }
