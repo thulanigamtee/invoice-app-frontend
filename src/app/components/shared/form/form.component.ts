@@ -70,7 +70,7 @@ export class FormComponent implements OnInit, OnDestroy {
   initialiseForm() {
     this.invoiceForm = this.formBuilder.group({
       id: [""],
-      createdAt: [new Date(), Validators.required],
+      createdAt: ["", Validators.required],
       paymentDue: ["", Validators.required],
       description: ["", Validators.required],
       paymentTerms: [0, Validators.required],
