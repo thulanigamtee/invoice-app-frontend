@@ -26,4 +26,14 @@ export class ToastService {
   set message(message: string) {
     this._message.next(message);
   }
+
+  displayToastMessage(message: string) {
+    setTimeout(() => {
+      this.toastState = true;
+    }, 500);
+    this.message = message;
+    setTimeout(() => {
+      this.toastState = false;
+    }, 2000);
+  }
 }
