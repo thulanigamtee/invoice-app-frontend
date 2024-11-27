@@ -25,11 +25,9 @@ export class AlertDialogComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.dialogService.isActive$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((state) => {
-        this.dialogState = state;
-      });
+    this.dialogService.isActive$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (state) => (this.dialogState = state),
+    });
   }
 
   cancelDeletion() {
@@ -43,14 +41,8 @@ export class AlertDialogComponent implements OnInit, OnDestroy {
       .subscribe({
         next: () => {
           this.dialogService.dialogState = false;
-          setTimeout(() => {
-            this.toastService.toastState = true;
-          }, 500);
-          this.toastService.message = "Invoice successfully deleted";
+          this.toastService.displayToastMessage("Invoice successfully deleted");
           this.router.navigate(["/"]);
-          setTimeout(() => {
-            this.toastService.toastState = false;
-          }, 2000);
         },
         error: () => {},
       });
