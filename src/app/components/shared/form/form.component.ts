@@ -103,13 +103,14 @@ export class FormComponent implements OnInit, OnDestroy {
     this.invoiceService
       .getInvoiceById(id)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((invoice) => {
-        this.invoiceForm.patchValue(invoice);
-        this.formService.paymentTerm = invoice.paymentTerms;
-
-        const itemsFormArray = this.invoiceForm.get("items") as FormArray;
-        itemsFormArray.clear();
-        this.loadInvoiceItems(invoice, itemsFormArray);
+      .subscribe({
+        next: (invoice) => {
+          this.invoiceForm.patchValue(invoice);
+          this.formService.paymentTerm = invoice.paymentTerms;
+          const itemsFormArray = this.invoiceForm.get("items") as FormArray;
+          itemsFormArray.clear();
+          this.loadInvoiceItems(invoice, itemsFormArray);
+        },
       });
   }
 
