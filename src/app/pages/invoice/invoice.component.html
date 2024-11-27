@@ -6,35 +6,39 @@
     <a class="h-3 w-2 bg-[url('/assets/icon-arrow-left.svg')] bg-no-repeat"></a>
     <p class="font-bold capitalize">go back</p>
   </section>
-  @if (invoice) {
-    <section class="px-[5%] lg:mx-auto lg:w-[730px] lg:px-0">
-      <div
-        class="flex h-[91px] items-center justify-between rounded-xl bg-itemsBgPrimary px-6 md:h-[88px] md:px-8"
-      >
+  @if (isLoading) {
+    <app-loader />
+  } @else {
+    @if (invoice) {
+      <section class="px-[5%] lg:mx-auto lg:w-[730px] lg:px-0">
         <div
-          class="flex items-center justify-between w-full md:w-auto md:gap-x-6"
+          class="flex h-[91px] items-center justify-between rounded-xl bg-itemsBgPrimary px-6 md:h-[88px] md:px-8"
         >
-          <p class="text-[13px] font-medium capitalize">status</p>
-          <app-status-indicator [status]="invoice.status" />
+          <div
+            class="flex w-full items-center justify-between md:w-auto md:gap-x-6"
+          >
+            <p class="text-[13px] font-medium capitalize">status</p>
+            <app-status-indicator [status]="invoice.status" />
+          </div>
+          <app-action-buttons
+            [isPending]="invoice.status === 'pending' ? true : false"
+            class="hidden md:block"
+            (editInvoiceEvent)="loadInvoice()"
+            (markAsPaidEvent)="markAsPaid()"
+          />
         </div>
+        <div class="rounded-xl bg-itemsBgPrimary">
+          <app-invoice-info [invoice]="invoice" />
+        </div>
+      </section>
+      <section class="mt-16 bg-itemsBgPrimary px-[5%] py-6 md:hidden">
         <app-action-buttons
           [isPending]="invoice.status === 'pending' ? true : false"
-          class="hidden md:block"
           (editInvoiceEvent)="loadInvoice()"
           (markAsPaidEvent)="markAsPaid()"
         />
-      </div>
-      <div class="rounded-xl bg-itemsBgPrimary">
-        <app-invoice-info [invoice]="invoice" />
-      </div>
-    </section>
-    <section class="mt-16 bg-itemsBgPrimary px-[5%] py-6 md:hidden">
-      <app-action-buttons
-        [isPending]="invoice.status === 'pending' ? true : false"
-        (editInvoiceEvent)="loadInvoice()"
-        (markAsPaidEvent)="markAsPaid()"
-      />
-    </section>
-    <app-alert-dialog [invoiceId]="invoiceId" />
+      </section>
+      <app-alert-dialog [invoiceId]="invoiceId" />
+    }
   }
 </main>
