@@ -9,6 +9,7 @@ import { AlertDialogComponent } from "../../components/invoice/alert-dialog/aler
 import { InvoiceService } from "../../services/invoice.service";
 import { FormComponent } from "../../components/shared/form/form.component";
 import { Subject, takeUntil } from "rxjs";
+import { ToastService } from "../../services/toast.service";
 
 @Component({
   selector: "app-invoice",
@@ -31,12 +32,16 @@ export class InvoiceComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private invoiceService: InvoiceService,
+    private toastService: ToastService,
   ) {}
 
   ngOnInit() {
     this.activatedRoute();
     this.getInvoice();
     this.invoiceService.isFiltered = false;
+    this.invoiceService.invoice$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (invoice) => (this.invoice = invoice),
+    });
   }
 
   activatedRoute() {
@@ -49,8 +54,8 @@ export class InvoiceComponent implements OnInit, OnDestroy {
     this.invoiceService
       .getInvoiceById(this.invoiceId)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((invoice) => {
-        this.invoice = invoice;
+      .subscribe({
+        next: (invoice) => (this.invoiceService.invoice = invoice),
       });
   }
 
@@ -66,6 +71,11 @@ export class InvoiceComponent implements OnInit, OnDestroy {
         .updateInvoice(this.invoiceId, this.invoice)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
+          next: () => {
+            this.toastService.displayToastMessage(
+              "Status successfully updated",
+            );
+          },
           error: () => {
             this.invoice.status = "pending"; // revert back if error occurs
           },
