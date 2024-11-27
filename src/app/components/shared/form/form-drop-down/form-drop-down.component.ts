@@ -1,7 +1,8 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import { FormService } from "../../../../services/form.service";
 import { Subject, takeUntil } from "rxjs";
 import { OutsideClickDirective } from "../../../../directives/outside-click.directive";
+import { FormGroup } from "@angular/forms";
 
 @Component({
   selector: "app-form-drop-down",
@@ -12,6 +13,7 @@ import { OutsideClickDirective } from "../../../../directives/outside-click.dire
 export class FormDropDownComponent implements OnInit, OnDestroy {
   isActive: boolean = false;
   paymentTerm!: number;
+  @Input() form!: FormGroup;
   private destroy$ = new Subject<void>();
 
   constructor(private formService: FormService) {}
@@ -25,7 +27,15 @@ export class FormDropDownComponent implements OnInit, OnDestroy {
 
   setPaymentTerm(term: number) {
     this.formService.paymentTerm = term;
+    this.setDueDate(term);
     this.toggleDropdown();
+  }
+
+  setDueDate(term: number) {
+    const invoiceDate = new Date(this.form.get("createdAt")?.value);
+    const paymentDue = new Date(invoiceDate);
+    paymentDue.setDate(paymentDue.getDate() + term);
+    this.form.get("paymentDue")?.setValue(paymentDue);
   }
 
   toggleDropdown() {
