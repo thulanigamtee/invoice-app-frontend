@@ -1,10 +1,5 @@
 import { Component, Input } from "@angular/core";
-import {
-  ControlValueAccessor,
-  FormControl,
-  ReactiveFormsModule,
-  Validator,
-} from "@angular/forms";
+import { ReactiveFormsModule } from "@angular/forms";
 
 @Component({
   selector: "app-input",
@@ -12,7 +7,7 @@ import {
   imports: [ReactiveFormsModule],
   templateUrl: "./input.component.html",
 })
-export class InputComponent implements ControlValueAccessor, Validator {
+export class InputComponent {
   @Input() label!: string;
   @Input() type: string = "text";
   @Input() id!: string;
@@ -20,26 +15,7 @@ export class InputComponent implements ControlValueAccessor, Validator {
   @Input() control!: any;
   @Input() readonly!: boolean;
 
-  onChange: (value: any) => void = () => {};
-  onTouched: () => void = () => {};
-
-  writeValue(value: any): void {
-    this.control.setValue(value);
-  }
-
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-  }
-
-  validate(c: FormControl) {
-    return this.control.errors;
-  }
-
-  setDisabledState?(isDisabled: boolean): void {
-    isDisabled ? this.control.disable() : this.control.enable();
+  get isInvalid() {
+    return this.control?.invalid && this.control?.touched;
   }
 }
