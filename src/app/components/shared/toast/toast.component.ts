@@ -16,15 +16,11 @@ export class ToastComponent {
   constructor(private toastService: ToastService) {}
 
   ngOnInit() {
-    this.toastService.isActive$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((state) => {
-        this.toastState = state;
-      });
-    this.toastService.message$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((message) => {
-        this.message = message;
-      });
+    this.toastService.isActive$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (state) => (this.toastState = state),
+    });
+    this.toastService.message$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (message) => (this.message = message),
+    });
   }
 }
