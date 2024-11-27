@@ -18,6 +18,12 @@ export class FormDropDownComponent implements OnInit, OnDestroy {
 
   constructor(private formService: FormService) {}
 
+  ngOnInit() {
+    this.formService.paymentTerm$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (term) => (this.paymentTerm = term),
+    });
+  }
+
   options: { id: number; value: number }[] = [
     { id: 0, value: 1 },
     { id: 1, value: 7 },
@@ -44,14 +50,6 @@ export class FormDropDownComponent implements OnInit, OnDestroy {
 
   outsideClick() {
     this.isActive = false;
-  }
-
-  ngOnInit() {
-    this.formService.paymentTerm$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((term) => {
-        this.paymentTerm = term;
-      });
   }
 
   ngOnDestroy() {
