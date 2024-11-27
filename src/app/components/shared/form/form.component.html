@@ -50,10 +50,10 @@
             [id]="'date'"
             [label]="'invoice date'"
             [type]="'date'"
-            [control]="invoiceForm.get('paymentDue')"
+            [control]="invoiceForm.get('createdAt')"
             [placeholder]="'Enter date'"
           />
-          <app-form-drop-down />
+          <app-form-drop-down [form]="invoiceForm" />
           <app-input
             [id]="'description'"
             [label]="'project description'"
