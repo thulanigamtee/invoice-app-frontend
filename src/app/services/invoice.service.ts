@@ -15,6 +15,9 @@ export class InvoiceService {
   private _invoices = new BehaviorSubject<Invoice[]>([]);
   invoices$ = this._invoices.asObservable();
 
+  private _invoice = new BehaviorSubject<any>({});
+  invoice$ = this._invoice.asObservable();
+
   private statusCount = new BehaviorSubject<number>(0);
   statusCount$ = this.statusCount.asObservable();
 
@@ -69,6 +72,14 @@ export class InvoiceService {
 
   set invoices(invoice) {
     this._invoices.next(invoice);
+  }
+
+  get invoice() {
+    return this._invoice.value;
+  }
+
+  set invoice(invoice) {
+    this._invoice.next(invoice);
   }
 
   get isFiltered() {
