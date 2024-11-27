@@ -37,8 +37,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.breakpointObserverService.observeBreakpoint();
     this.breakpointObserverService.isMediumWidth$
       .pipe(takeUntil(this.destroy$))
-      .subscribe((isMediumWidth) => {
-        this.isMediumWidth = isMediumWidth;
+      .subscribe({
+        next: (width) => (this.isMediumWidth = width),
       });
     this.invoiceInformation();
     this.filterInformation();
@@ -47,27 +47,23 @@ export class HomeComponent implements OnInit, OnDestroy {
   invoiceInformation() {
     this.invoiceService.invoicesCount$
       .pipe(takeUntil(this.destroy$))
-      .subscribe((count) => {
-        this.invoicesCount = count;
+      .subscribe({
+        next: (count) => (this.invoicesCount = count),
       });
-    this.invoiceService.statusCount$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((count) => {
-        this.statusCount = count;
-      });
+    this.invoiceService.statusCount$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (count) => (this.statusCount = count),
+    });
   }
 
   filterInformation() {
     this.invoiceService.filterMessage$
       .pipe(takeUntil(this.destroy$))
-      .subscribe((message) => {
-        this.filterMessage = message;
+      .subscribe({
+        next: (message) => (this.filterMessage = message),
       });
-    this.invoiceService.isFiltered$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((isFiltered) => {
-        this.isFiltered = isFiltered;
-      });
+    this.invoiceService.isFiltered$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (isFiltered) => (this.isFiltered = isFiltered),
+    });
   }
 
   showForm() {
