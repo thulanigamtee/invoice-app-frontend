@@ -9,8 +9,11 @@ import { Invoice } from "../interfaces/invoice.interface";
 export class InvoiceService {
   private apiUrl = "http://localhost:8080/invoices";
 
-  private invoicesCount = new BehaviorSubject<number>(0);
-  invoicesCount$ = this.invoicesCount.asObservable();
+  private _invoicesCount = new BehaviorSubject<number>(0);
+  invoicesCount$ = this._invoicesCount.asObservable();
+
+  private _invoices = new BehaviorSubject<Invoice[]>([]);
+  invoices$ = this._invoices.asObservable();
 
   private statusCount = new BehaviorSubject<number>(0);
   statusCount$ = this.statusCount.asObservable();
@@ -29,7 +32,7 @@ export class InvoiceService {
   getInvoices(status?: "draft" | "pending" | "paid"): Observable<Invoice[]> {
     return this.http.get<Invoice[]>(`${this.apiUrl}`).pipe(
       tap((data) => {
-        this.invoicesCount.next(data.length);
+        this._invoicesCount.next(data.length);
         this.statusCount.next(
           data.filter((invoice) => invoice.status === status).length,
         );
@@ -50,6 +53,22 @@ export class InvoiceService {
 
   updateInvoice(id: string, updatedInvoice: Invoice): Observable<Invoice> {
     return this.http.put<Invoice>(`${this.apiUrl}/${id}`, updatedInvoice);
+  }
+
+  get invoicesCount() {
+    return this._invoicesCount.value;
+  }
+
+  set invoicesCount(count) {
+    this._invoicesCount.next(count);
+  }
+
+  get invoices() {
+    return this._invoices.value;
+  }
+
+  set invoices(invoice) {
+    this._invoices.next(invoice);
   }
 
   get isFiltered() {
