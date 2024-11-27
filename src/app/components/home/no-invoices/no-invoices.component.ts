@@ -18,8 +18,8 @@ export class NoInvoicesComponent implements OnInit, OnDestroy {
     this.breakpointObserverService.observeBreakpoint();
     this.breakpointObserverService.isMediumWidth$
       .pipe(takeUntil(this.destroy$))
-      .subscribe((isMediumWidth) => {
-        this.isMediumWidth = isMediumWidth;
+      .subscribe({
+        next: (isMediumWidth) => (this.isMediumWidth = isMediumWidth),
       });
   }
 
