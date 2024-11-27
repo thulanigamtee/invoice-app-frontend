@@ -46,7 +46,7 @@ export class AlertDialogComponent implements OnInit, OnDestroy {
           setTimeout(() => {
             this.toastService.toastState = true;
           }, 500);
-          this.toastService.message = "invoice successfully deleted";
+          this.toastService.message = "Invoice successfully deleted";
           this.router.navigate(["/"]);
           setTimeout(() => {
             this.toastService.toastState = false;
