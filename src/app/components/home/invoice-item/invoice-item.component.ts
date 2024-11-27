@@ -30,21 +30,28 @@ export class InvoiceItemComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getInvoices();
+    this.invoiceService.invoices$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((invoices) => {
+        this.invoices = invoices;
+      });
+    this.invoiceService.isLoading$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((loading) => {
+        this.isLoading = loading;
+      });
   }
 
   getInvoices(status?: "draft" | "pending" | "paid") {
     this.invoiceService
       .getInvoices(status)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((data) => {
-        this.invoices = data;
-        this.invoicesCount = data.length;
-        this.invoiceService.isLoading = false;
-      });
-    this.invoiceService.isLoading$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((loading) => {
-        this.isLoading = loading;
+      .subscribe({
+        next: (data) => {
+          this.invoiceService.invoices = data;
+          this.invoicesCount = data.length;
+          this.invoiceService.isLoading = false;
+        },
       });
   }
   filterByStatus(event: {
