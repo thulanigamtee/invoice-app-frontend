@@ -30,16 +30,12 @@ export class InvoiceItemComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getInvoices();
-    this.invoiceService.invoices$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((invoices) => {
-        this.invoices = invoices;
-      });
-    this.invoiceService.isLoading$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((loading) => {
-        this.isLoading = loading;
-      });
+    this.invoiceService.invoices$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (invoices) => (this.invoices = invoices),
+    });
+    this.invoiceService.isLoading$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (loading) => (this.isLoading = loading),
+    });
   }
 
   getInvoices(status?: "draft" | "pending" | "paid") {
@@ -62,10 +58,11 @@ export class InvoiceItemComponent implements OnInit, OnDestroy {
       this.invoiceService
         .getInvoices(event.status)
         .pipe(takeUntil(this.destroy$))
-        .subscribe((data) => {
-          this.invoices = data.filter(
-            (invoice) => invoice.status === event.status,
-          );
+        .subscribe({
+          next: (data) =>
+            (this.invoices = data.filter(
+              (invoice) => invoice.status === event.status,
+            )),
         });
       this.invoiceService.isFiltered = true;
       this.invoiceService.filterMessage = event.status;
@@ -73,8 +70,8 @@ export class InvoiceItemComponent implements OnInit, OnDestroy {
       this.invoiceService
         .getInvoices()
         .pipe(takeUntil(this.destroy$))
-        .subscribe((data) => {
-          this.invoices = data;
+        .subscribe({
+          next: (data) => (this.invoices = data),
         });
       this.invoiceService.isFiltered = false;
     }
