@@ -68,6 +68,12 @@ input {
     color: #888eb0;
     font-weight: normal;
   }
+  &.invalid {
+    box-shadow: 0 0 0 1px var(--redPrimary);
+  }
+  &:focus {
+    box-shadow: 0 0 0 1px var(--purplePrimary);
+  }
 }
 
 img {
