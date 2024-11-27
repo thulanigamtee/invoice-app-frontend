@@ -8,7 +8,7 @@ import {
 } from "@angular/core";
 import { OutsideClickDirective } from "../../../directives/outside-click.directive";
 import { BreakpointObserverService } from "../../../services/breakpointObserver.service";
-import { Subject, takeUntil } from "rxjs";
+import { Subject, take, takeUntil } from "rxjs";
 
 @Component({
   selector: "app-drop-down",
@@ -56,8 +56,8 @@ export class DropDownComponent implements OnInit, OnDestroy {
     this.breakpointObserverService.observeBreakpoint();
     this.breakpointObserverService.isMediumWidth$
       .pipe(takeUntil(this.destroy$))
-      .subscribe((isMediumWidth) => {
-        this.isMediumWidth = isMediumWidth;
+      .subscribe({
+        next: (isMediumWidth) => (this.isMediumWidth = isMediumWidth),
       });
   }
 
