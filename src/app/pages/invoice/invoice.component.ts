@@ -10,6 +10,7 @@ import { InvoiceService } from "../../services/invoice.service";
 import { FormComponent } from "../../components/shared/form/form.component";
 import { Subject, takeUntil } from "rxjs";
 import { ToastService } from "../../services/toast.service";
+import { LoaderComponent } from "../../components/shared/loader/loader.component";
 
 @Component({
   selector: "app-invoice",
@@ -21,12 +22,14 @@ import { ToastService } from "../../services/toast.service";
     ActionButtonsComponent,
     AlertDialogComponent,
     FormComponent,
+    LoaderComponent,
   ],
   templateUrl: "./invoice.component.html",
 })
 export class InvoiceComponent implements OnInit, OnDestroy {
   invoiceId!: string;
   invoice!: Invoice;
+  isLoading: boolean = true;
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -39,6 +42,10 @@ export class InvoiceComponent implements OnInit, OnDestroy {
     this.activatedRoute();
     this.getInvoice();
     this.invoiceService.isFiltered = false;
+    this.invoiceService.isLoading = true;
+    this.invoiceService.isLoading$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (loading) => (this.isLoading = loading),
+    });
     this.invoiceService.invoice$.pipe(takeUntil(this.destroy$)).subscribe({
       next: (invoice) => (this.invoice = invoice),
     });
@@ -55,7 +62,10 @@ export class InvoiceComponent implements OnInit, OnDestroy {
       .getInvoiceById(this.invoiceId)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (invoice) => (this.invoiceService.invoice = invoice),
+        next: (invoice) => {
+          this.invoiceService.invoice = invoice;
+          this.invoiceService.isLoading = false;
+        },
       });
   }
 
