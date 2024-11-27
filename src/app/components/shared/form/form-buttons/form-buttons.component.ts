@@ -35,33 +35,32 @@ export class FormButtonsComponent {
 
   createInvoice() {
     this.form.get("status")?.setValue("pending");
-    this.invoiceService
-      .createInvoice(this.form.value)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (newInvoice) => {
-          this.updateInvoices(newInvoice, "invoice successfully created");
-        },
-        error: () => {
-          this.toastService.message = "error creating invoice";
-        },
-      });
+    if (this.form.valid) {
+      this.invoiceService
+        .createInvoice(this.form.value)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (newInvoice) => {
+            this.updateInvoices(newInvoice);
+            this.toastService.displayToastMessage(
+              "Invoice successfully created",
+            );
+            this.form.reset();
+          },
+          error: () => {
+            this.toastService.message = "Error creating invoice";
+          },
+        });
+    }
   }
 
-  updateInvoices(invoice: Invoice, toastMessage: string) {
+  updateInvoices(invoice: Invoice) {
     const updatedInvoices = [...this.invoiceService.invoices, invoice];
     this.invoiceService.invoices = updatedInvoices;
     this.invoiceService.invoicesCount = updatedInvoices.length;
     this.invoiceService.isFiltered = false;
     this.formService.formState = false;
     document.body.classList.remove("no-scroll");
-    setTimeout(() => {
-      this.toastService.toastState = true;
-    }, 500);
-    this.toastService.message = toastMessage;
-    setTimeout(() => {
-      this.toastService.toastState = false;
-    }, 2000);
   }
 
   saveChanges() {
@@ -70,19 +69,14 @@ export class FormButtonsComponent {
       .updateInvoice(id, this.form.value)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: () => {
+        next: (data) => {
+          this.invoiceService.invoice = data; // update invoice
           this.formService.formState = false;
           document.body.classList.remove("no-scroll");
-          setTimeout(() => {
-            this.toastService.toastState = true;
-          }, 500);
-          this.toastService.message = "invoice successfully updated";
-          setTimeout(() => {
-            this.toastService.toastState = false;
-          }, 2000);
+          this.toastService.displayToastMessage("Invoice successfully updated");
         },
         error: () => {
-          this.toastService.message = "error updating invoice";
+          this.toastService.message = "Error updating invoice";
         },
       });
   }
@@ -94,10 +88,12 @@ export class FormButtonsComponent {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (draftInvoice) => {
-          this.updateInvoices(draftInvoice, "draft successfully created");
+          this.updateInvoices(draftInvoice);
+          this.toastService.displayToastMessage("Draft successfully created");
+          this.form.reset();
         },
         error: () => {
-          this.toastService.message = "error creating invoice";
+          this.toastService.message = "Error creating invoice";
         },
       });
   }
