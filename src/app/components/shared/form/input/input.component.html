@@ -7,7 +7,7 @@
       [type]="type"
       [placeholder]="placeholder"
       [readonly]="readonly"
-      class="h-12 rounded-lg bg-transparent bg-none px-0 text-[15px] font-bold text-white outline-none"
+      class="h-12 rounded-[4px] bg-transparent bg-none px-0 text-[15px] font-bold text-white outline-none"
     />
   } @else {
     <input
@@ -16,7 +16,7 @@
       [type]="type"
       [placeholder]="placeholder"
       [ngClass]="{ invalid: control?.invalid && control?.touched }"
-      class="h-12 rounded-lg bg-itemsBgPrimary px-5 text-[15px] font-bold text-white outline-none"
+      class="h-12 rounded-[4px] border-[1px] border-transparent bg-itemsBgPrimary px-5 text-[15px] font-bold text-white outline-none focus:border-purplePrimary"
     />
   }
 </div>

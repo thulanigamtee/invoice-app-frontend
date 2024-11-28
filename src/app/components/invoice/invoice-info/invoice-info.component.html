@@ -43,7 +43,9 @@
     </div>
   </article>
   <div>
-    <ul class="flex flex-col gap-y-4 rounded-t-xl bg-btnBgPrimary p-6 md:mt-10">
+    <ul
+      class="flex flex-col gap-y-4 rounded-t-[8px] bg-btnBgPrimary p-6 md:mt-10"
+    >
       <div class="hidden md:grid md:grid-cols-4">
         <span class="font-medium capitalize">item name</span>
         <span class="text-center font-medium uppercase">qty.</span>
@@ -69,7 +71,7 @@
       }
     </ul>
     <div
-      class="flex items-center justify-between rounded-b-xl bg-[#0C0E16] p-6"
+      class="flex items-center justify-between rounded-b-[8px] bg-[#0C0E16] p-6"
     >
       <span class="font-medium capitalize text-white">amount due</span>
       <p class="text-2xl">{{ invoice.total | currency: "GBP" }}</p>

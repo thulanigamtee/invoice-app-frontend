@@ -12,7 +12,7 @@
     @if (invoice) {
       <section class="px-[5%] lg:mx-auto lg:w-[730px] lg:px-0">
         <div
-          class="flex h-[91px] items-center justify-between rounded-xl bg-itemsBgPrimary px-6 md:h-[88px] md:px-8"
+          class="flex h-[91px] items-center justify-between rounded-[8px] bg-itemsBgPrimary px-6 md:h-[88px] md:px-8"
         >
           <div
             class="flex w-full items-center justify-between md:w-auto md:gap-x-6"
@@ -27,7 +27,7 @@
             (markAsPaidEvent)="markAsPaid()"
           />
         </div>
-        <div class="rounded-xl bg-itemsBgPrimary">
+        <div class="rounded-[8px] bg-itemsBgPrimary">
           <app-invoice-info [invoice]="invoice" />
         </div>
       </section>
