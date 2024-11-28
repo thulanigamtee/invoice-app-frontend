@@ -20,7 +20,10 @@ export class FormDropDownComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.formService.paymentTerm$.pipe(takeUntil(this.destroy$)).subscribe({
-      next: (term) => (this.paymentTerm = term),
+      next: (term) => {
+        this.paymentTerm = term;
+        this.setDueDate(term);
+      },
     });
   }
 
