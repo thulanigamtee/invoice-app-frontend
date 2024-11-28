@@ -8,7 +8,7 @@ import {
 } from "@angular/core";
 import { OutsideClickDirective } from "../../../directives/outside-click.directive";
 import { BreakpointObserverService } from "../../../services/breakpointObserver.service";
-import { Subject, take, takeUntil } from "rxjs";
+import { Subject, takeUntil } from "rxjs";
 
 @Component({
   selector: "app-drop-down",
