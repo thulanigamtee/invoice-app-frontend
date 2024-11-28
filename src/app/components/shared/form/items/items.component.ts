@@ -23,13 +23,14 @@ export class ItemsComponent implements OnInit {
 
   ngOnInit() {
     if (!this.items) this.items = this.formBuilder.array([]);
+    this.addItem();
   }
 
   addItem() {
     const item: FormGroup = this.formBuilder.group({
       name: ["", Validators.required],
-      quantity: [1, [Validators.required, Validators.min(1)]],
-      price: [0, Validators.required],
+      quantity: ["", [Validators.required, Validators.min(1)]],
+      price: ["", Validators.required],
       total: [0],
     });
     this.items.push(item);
