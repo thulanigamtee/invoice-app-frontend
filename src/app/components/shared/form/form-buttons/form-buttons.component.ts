@@ -31,6 +31,7 @@ export class FormButtonsComponent {
   discardForm() {
     this.formService.formState = false;
     document.body.classList.remove("no-scroll");
+    this.form.reset();
   }
 
   createInvoice() {
