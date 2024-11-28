@@ -69,11 +69,18 @@ input {
     font-weight: normal;
   }
   &.invalid {
-    box-shadow: 0 0 0 1px var(--redPrimary);
+    // box-shadow: 0 0 0 1px var(--redPrimary);
+    border: 1px solid var(--redPrimary);
   }
-  &:focus {
-    box-shadow: 0 0 0 1px var(--purplePrimary);
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 img {
