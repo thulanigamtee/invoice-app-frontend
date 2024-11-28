@@ -15,7 +15,7 @@
       [formControl]="control"
       [type]="type"
       [placeholder]="placeholder"
-      [class.invalid]="isInvalid"
+      [ngClass]="{ invalid: control?.invalid && control?.touched }"
       class="h-12 rounded-lg bg-itemsBgPrimary px-5 text-[15px] font-bold text-white outline-none"
     />
   }
