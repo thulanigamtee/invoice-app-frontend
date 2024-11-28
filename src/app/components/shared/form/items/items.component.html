@@ -2,8 +2,9 @@
   <div formArrayName="items">
     <h3 class="text-[18px] font-bold text-[#777F98]">Item List</h3>
     @for (item of items.controls; track $index) {
-      <div class="flex flex-wrap items-end justify-between gap-4 mt-6">
+      <div class="mt-6 flex flex-wrap items-end justify-between gap-4">
         <app-input
+          [id]="'itemName'"
           [label]="'item name'"
           [type]="'text'"
           [placeholder]="'Item name'"
@@ -11,6 +12,7 @@
           class="w-[100%] md:w-[40%]"
         />
         <app-input
+          [id]="'quantity'"
           [label]="'qty.'"
           [type]="'number'"
           [placeholder]="''"
@@ -19,6 +21,7 @@
           class="w-[20%] md:w-[10%]"
         />
         <app-input
+          [id]="'price'"
           [label]="'Price'"
           [type]="'number'"
           [placeholder]="''"
@@ -27,6 +30,7 @@
           class="w-[30%] md:w-[15%]"
         />
         <app-input
+          [id]="'total'"
           [label]="'Total'"
           [type]="'number'"
           [placeholder]="'Total'"
@@ -44,7 +48,7 @@
     <app-button
       [text]="'+ add new item'"
       [isNewInvoiceBtn]="false"
-      class="block w-full mt-10 rounded-full bg-btnBgPrimary"
+      class="mt-10 block w-full rounded-full bg-btnBgPrimary"
       (click)="addItem()"
     />
   </div>
