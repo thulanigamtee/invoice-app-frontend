@@ -5,7 +5,7 @@
 >
   <span class="capitalize text-[#888EB0]">payment terms</span>
   <button
-    class="flex h-12 items-center justify-between rounded-lg bg-itemsBgPrimary px-6"
+    class="flex h-12 items-center justify-between rounded-[4px] bg-itemsBgPrimary px-6"
     (click)="toggleDropdown()"
   >
     <p class="capitalize">
@@ -14,7 +14,7 @@
     <img src="/assets/icon-arrow-down.svg" alt="icon-arrow-down" />
   </button>
   <ul
-    class="form-drop-down absolute mt-20 w-full rounded-lg bg-itemsBgPrimary"
+    class="form-drop-down absolute mt-[82px] w-full rounded-[8px] bg-itemsBgPrimary"
     [class.active]="isActive"
   >
     @for (option of options; track $index) {
