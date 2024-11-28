@@ -1,7 +1,7 @@
 import { Component, Input } from "@angular/core";
 import { ButtonComponent } from "../../button/button.component";
 import { FormService } from "../../../../services/form.service";
-import { FormGroup } from "@angular/forms";
+import { FormArray, FormGroup } from "@angular/forms";
 import { InvoiceService } from "../../../../services/invoice.service";
 import { Subject, takeUntil } from "rxjs";
 import { ToastService } from "../../../../services/toast.service";
@@ -35,7 +35,9 @@ export class FormButtonsComponent {
 
   createInvoice() {
     this.form.get("status")?.setValue("pending");
-    if (this.form.valid) {
+    if (this.form.invalid) {
+      this.markFieldAsInvalid(this.form);
+    } else {
       this.invoiceService
         .createInvoice(this.form.value)
         .pipe(takeUntil(this.destroy$))
@@ -54,6 +56,17 @@ export class FormButtonsComponent {
     }
   }
 
+  markFieldAsInvalid(formGroup: FormGroup | FormArray) {
+    Object.keys(formGroup.controls).forEach((key) => {
+      const control = formGroup.get(key);
+      if (control instanceof FormGroup || control instanceof FormArray) {
+        this.markFieldAsInvalid(control);
+      } else {
+        control?.markAsTouched();
+      }
+    });
+  }
+
   updateInvoices(invoice: Invoice) {
     const updatedInvoices = [...this.invoiceService.invoices, invoice];
     this.invoiceService.invoices = updatedInvoices;
@@ -65,20 +78,26 @@ export class FormButtonsComponent {
 
   saveChanges() {
     const id = this.form.get("id")?.value;
-    this.invoiceService
-      .updateInvoice(id, this.form.value)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (data) => {
-          this.invoiceService.invoice = data; // update invoice
-          this.formService.formState = false;
-          document.body.classList.remove("no-scroll");
-          this.toastService.displayToastMessage("Invoice successfully updated");
-        },
-        error: () => {
-          this.toastService.message = "Error updating invoice";
-        },
-      });
+    if (this.form.invalid) {
+      this.markFieldAsInvalid(this.form);
+    } else {
+      this.invoiceService
+        .updateInvoice(id, this.form.value)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (data) => {
+            this.invoiceService.invoice = data;
+            this.formService.formState = false;
+            document.body.classList.remove("no-scroll");
+            this.toastService.displayToastMessage(
+              "Invoice successfully updated",
+            );
+          },
+          error: () => {
+            this.toastService.message = "Error updating invoice";
+          },
+        });
+    }
   }
 
   saveAsDraft() {
