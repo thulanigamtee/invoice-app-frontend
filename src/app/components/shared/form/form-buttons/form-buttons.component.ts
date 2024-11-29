@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { ButtonComponent } from "../../button/button.component";
 import { FormService } from "../../../../services/form.service";
 import { FormArray, FormGroup } from "@angular/forms";
@@ -13,9 +13,10 @@ import { Invoice } from "../../../../interfaces/invoice.interface";
   imports: [ButtonComponent],
   templateUrl: "./form-buttons.component.html",
 })
-export class FormButtonsComponent {
+export class FormButtonsComponent implements OnInit {
   @Input() form!: FormGroup;
   isLoading: boolean = true;
+  isEditMode!: boolean;
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -24,14 +25,21 @@ export class FormButtonsComponent {
     private toastService: ToastService,
   ) {}
 
-  isEditMode() {
-    return this.formService.isEditMode;
+  ngOnInit() {
+    this.formService.isEditMode$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (mode) => (this.isEditMode = mode),
+    });
   }
 
   discardForm() {
-    this.formService.formState = false;
-    document.body.classList.remove("no-scroll");
-    this.form.reset();
+    if (this.isEditMode) {
+      this.formService.formState = false;
+      document.body.classList.remove("no-scroll");
+    } else {
+      this.formService.formState = false;
+      document.body.classList.remove("no-scroll");
+      this.form.reset();
+    }
   }
 
   createInvoice() {
