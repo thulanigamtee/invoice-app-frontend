@@ -6,13 +6,13 @@
     class="absolute top-0 bg-[#141625] md:w-[80%] md:max-w-[620px] md:pt-4 lg:top-0"
   >
     <button
-      class="mb-5 ml-[5%] mt-7 flex w-auto items-center gap-x-3"
+      class="mb-5 ml-[5%] mt-7 flex w-auto items-center gap-x-3 font-bold capitalize hover:text-purpleSecondary"
       (click)="discardForm()"
     >
       <a
         class="h-3 w-2 bg-[url('/assets/icon-arrow-left.svg')] bg-no-repeat"
       ></a>
-      <p class="font-bold capitalize">go back</p>
+      go back
     </button>
     <h1 class="ml-[5%] text-2xl capitalize">
       {{ isEditMode ? "edit invoice" : "new invoice" }}
@@ -29,7 +29,7 @@
         >
           bill to
         </h3>
-        <div class="flex flex-col mt-4 gap-y-5">
+        <div class="mt-4 flex flex-col gap-y-5">
           <app-input
             [id]="'name'"
             [label]="'client\'s name'"
@@ -48,7 +48,7 @@
         <app-client-address
           [clientAddress]="invoiceForm.get('clientAddress')"
         />
-        <div class="grid gap-6 mt-8 md:grid-cols-2">
+        <div class="mt-8 grid gap-6 md:grid-cols-2">
           <app-input
             [id]="'date'"
             [label]="'invoice date'"
