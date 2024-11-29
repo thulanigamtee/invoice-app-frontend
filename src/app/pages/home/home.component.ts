@@ -83,5 +83,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+    this.formService.formState = false;
   }
 }
