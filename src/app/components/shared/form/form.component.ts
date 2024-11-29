@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import {
   FormArray,
   FormBuilder,
@@ -125,6 +125,11 @@ export class FormComponent implements OnInit, OnDestroy {
         }),
       );
     });
+  }
+
+  @ViewChild(FormButtonsComponent) formButtons!: FormButtonsComponent;
+  discardForm() {
+    this.formButtons.discardForm();
   }
 
   ngOnDestroy() {
