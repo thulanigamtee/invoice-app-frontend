@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, RouterLink } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { InvoiceInfoComponent } from "../../components/invoice/invoice-info/invoice-info.component";
 import { StatusIndicatorComponent } from "../../components/shared/status-indicator/status-indicator.component";
@@ -24,6 +24,7 @@ import { FormService } from "../../services/form.service";
     AlertDialogComponent,
     FormComponent,
     LoaderComponent,
+    RouterLink,
   ],
   templateUrl: "./invoice.component.html",
 })
