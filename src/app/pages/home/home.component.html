@@ -22,17 +22,16 @@
     </section>
     <section class="flex items-center gap-x-4 md:gap-x-10">
       <app-drop-down (filterEvent)="filterByStatus($event)" />
-      <app-button
-        [text]="isMediumWidth ? 'new invoice' : 'new'"
-        [isNewInvoiceBtn]="true"
-        class="rounded-full bg-purplePrimary pr-1"
+      <button
         (click)="showForm()"
+        class="flex items-center whitespace-nowrap rounded-full bg-purplePrimary py-2 pl-2 pr-3 font-bold capitalize"
       >
         <span
-          class="grid h-8 w-8 items-center rounded-full bg-white bg-[url('/assets/icon-plus.svg')] bg-center bg-no-repeat"
+          class="mr-2 grid h-8 w-8 items-center rounded-full bg-white bg-[url('/assets/icon-plus.svg')] bg-center bg-no-repeat"
         >
         </span>
-      </app-button>
+        {{ isMediumWidth ? "new invoice" : "new" }}
+      </button>
     </section>
   </div>
   <app-invoice-item />
