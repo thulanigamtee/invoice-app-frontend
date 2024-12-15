@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { DropDownComponent } from "../../components/home/drop-down/drop-down.component";
-import { ButtonComponent } from "../../components/shared/button/button.component";
 import { InvoiceItemComponent } from "../../components/home/invoice-item/invoice-item.component";
 import { FormComponent } from "../../components/shared/form/form.component";
 import { FormService } from "../../services/form.service";
@@ -11,12 +10,7 @@ import { Subject, takeUntil } from "rxjs";
 @Component({
   selector: "app-home",
   standalone: true,
-  imports: [
-    DropDownComponent,
-    ButtonComponent,
-    InvoiceItemComponent,
-    FormComponent,
-  ],
+  imports: [DropDownComponent, InvoiceItemComponent, FormComponent],
   templateUrl: "./home.component.html",
 })
 export class HomeComponent implements OnInit, OnDestroy {
