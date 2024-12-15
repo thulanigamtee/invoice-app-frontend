@@ -4,14 +4,14 @@
   >
     <div class="flex gap-x-2 self-center">
       <app-button
-        [text]="'cancel'"
-        class="rounded-full bg-[#373B53]"
-        (click)="discardForm()"
+        [label]="'cancel'"
+        [customStyle]="'bg-[#373B53]'"
+        (buttonEvent)="discardForm()"
       />
       <app-button
-        [text]="'save changes'"
-        class="rounded-full bg-purplePrimary"
-        (click)="saveChanges()"
+        [label]="'save changes'"
+        [customStyle]="'bg-purplePrimary'"
+        (buttonEvent)="saveChanges()"
       />
     </div>
   </section>
@@ -20,21 +20,20 @@
     class="sticky bottom-0 flex h-20 items-center justify-between bg-itemsBgPrimary px-[5%] md:bg-[#141625]"
   >
     <app-button
-      [text]="'discard'"
-      class="rounded-full bg-btnBgPrimary"
-      (click)="discardForm()"
+      [label]="'discard'"
+      [customStyle]="'bg-btnBgPrimary'"
+      (buttonEvent)="discardForm()"
     />
     <div class="flex gap-x-2">
       <app-button
-        [text]="'Save as Draft'"
-        class="rounded-full bg-[#373B53]"
-        (click)="saveAsDraft()"
+        [label]="'Save as Draft'"
+        [customStyle]="'bg-[#373B53]'"
+        (buttonEvent)="saveAsDraft()"
       />
       <app-button
-        [text]="'save & send'"
-        class="rounded-full bg-purplePrimary"
-        type="submit"
-        (click)="createInvoice()"
+        [label]="'save & send'"
+        [customStyle]="'bg-purplePrimary'"
+        (buttonEvent)="createInvoice()"
       />
     </div>
   </section>
