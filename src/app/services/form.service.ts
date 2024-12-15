@@ -5,36 +5,36 @@ import { BehaviorSubject } from "rxjs";
   providedIn: "root",
 })
 export class FormService {
-  private isActive = new BehaviorSubject<boolean>(false);
-  isActive$ = this.isActive.asObservable();
+  private formSubject = new BehaviorSubject<boolean>(false);
+  form$ = this.formSubject.asObservable();
 
-  private _isEditMode = new BehaviorSubject<boolean>(false);
-  isEditMode$ = this._isEditMode.asObservable();
+  private isEditModeSubject = new BehaviorSubject<boolean>(false);
+  isEditMode$ = this.isEditModeSubject.asObservable();
 
-  private _paymentTerm = new BehaviorSubject<number>(30);
-  paymentTerm$ = this._paymentTerm.asObservable();
+  private paymentTermSubject = new BehaviorSubject<number>(30);
+  paymentTerm$ = this.paymentTermSubject.asObservable();
 
   get formState() {
-    return this.isActive.value;
+    return this.formSubject.value;
   }
 
   set formState(state: boolean) {
-    this.isActive.next(state);
+    this.formSubject.next(state);
   }
 
   get isEditMode() {
-    return this._isEditMode.value;
+    return this.isEditModeSubject.value;
   }
 
   set isEditMode(mode: boolean) {
-    this._isEditMode.next(mode);
+    this.isEditModeSubject.next(mode);
   }
 
   get paymentTerm() {
-    return this._paymentTerm.value;
+    return this.paymentTermSubject.value;
   }
 
   set paymentTerm(term: number) {
-    this._paymentTerm.next(term);
+    this.paymentTermSubject.next(term);
   }
 }
