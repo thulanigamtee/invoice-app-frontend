@@ -11,7 +11,7 @@ import { FormGroup } from "@angular/forms";
   templateUrl: "./form-drop-down.component.html",
 })
 export class FormDropDownComponent implements OnInit, OnDestroy {
-  isActive: boolean = false;
+  isDropdownActive: boolean = false;
   paymentTerm!: number;
   @Input() form!: FormGroup;
   private destroy$ = new Subject<void>();
@@ -48,11 +48,11 @@ export class FormDropDownComponent implements OnInit, OnDestroy {
   }
 
   toggleDropdown() {
-    this.isActive = !this.isActive;
+    this.isDropdownActive = !this.isDropdownActive;
   }
 
   outsideClick() {
-    this.isActive = false;
+    this.isDropdownActive = false;
   }
 
   ngOnDestroy() {

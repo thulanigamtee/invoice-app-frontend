@@ -15,7 +15,7 @@
   </button>
   <ul
     class="form-drop-down absolute mt-[82px] w-full rounded-[8px] bg-itemsBgPrimary"
-    [class.active]="isActive"
+    [class.active]="isDropdownActive"
   >
     @for (option of options; track $index) {
       <li
