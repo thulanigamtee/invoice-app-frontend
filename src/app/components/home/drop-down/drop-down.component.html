@@ -14,7 +14,7 @@
     <img src="/assets/icon-arrow-down.svg" alt="icon-arrow-down" />
   </button>
   <ul
-    [class.active]="isActive"
+    [class.active]="isDropdownActive"
     class="drop-down absolute mt-10 flex h-[120px] w-[140px] flex-col justify-center gap-[4px] rounded-[8px] bg-btnBgPrimary p-6 md:h-[128px] md:w-[192px] md:py-4"
   >
     @for (option of options; track $index) {

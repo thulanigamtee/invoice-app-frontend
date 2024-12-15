@@ -17,19 +17,19 @@ import { Subject, takeUntil } from "rxjs";
   templateUrl: "./drop-down.component.html",
 })
 export class DropDownComponent implements OnInit, OnDestroy {
-  @Output() isActiveEvent = new EventEmitter<boolean>();
+  @Output() dropdownEvent = new EventEmitter<boolean>();
 
   @Output() filterEvent = new EventEmitter<{
     status: "draft" | "pending" | "paid";
     isChecked: boolean;
   }>();
 
-  isActive!: boolean;
+  isDropdownActive!: boolean;
   isMediumWidth!: boolean;
   private destroy$ = new Subject<void>();
 
-  emitIsActiveEvent() {
-    this.isActiveEvent.emit(this.isActive);
+  emitDropdownEvent() {
+    this.dropdownEvent.emit(this.isDropdownActive);
   }
 
   emitFilterEvent(
@@ -41,13 +41,13 @@ export class DropDownComponent implements OnInit, OnDestroy {
   }
 
   toggleDropDown() {
-    this.isActive = !this.isActive;
-    this.emitIsActiveEvent();
+    this.isDropdownActive = !this.isDropdownActive;
+    this.emitDropdownEvent();
   }
 
   outsideClick() {
-    this.isActive = false;
-    this.emitIsActiveEvent();
+    this.isDropdownActive = false;
+    this.emitDropdownEvent();
   }
 
   constructor(private breakpointObserverService: BreakpointObserverService) {}
