@@ -12,14 +12,14 @@
     </p>
     <div class="mt-8 flex justify-end gap-x-4">
       <app-button
-        [text]="'cancel'"
-        class="rounded-full bg-btnBgPrimary"
-        (click)="cancelDeletion()"
+        [label]="'cancel'"
+        [customStyle]="'bg-btnBgPrimary'"
+        (buttonEvent)="cancelDeletion()"
       />
       <app-button
-        [text]="'delete'"
-        class="rounded-full bg-redPrimary"
-        (click)="confirmDeletion()"
+        [label]="'delete'"
+        [customStyle]="'bg-bg-redPrimary'"
+        (buttonEvent)="confirmDeletion()"
       />
     </div>
   </div>

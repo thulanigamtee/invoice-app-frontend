@@ -25,7 +25,7 @@ export class AlertDialogComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.dialogService.isActive$.pipe(takeUntil(this.destroy$)).subscribe({
+    this.dialogService.dialog$.pipe(takeUntil(this.destroy$)).subscribe({
       next: (state) => (this.dialogState = state),
     });
   }
