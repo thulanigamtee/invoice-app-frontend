@@ -1,19 +1,19 @@
 <div class="flex justify-between md:gap-x-2">
   <app-button
-    [text]="'Edit'"
-    class="rounded-full bg-btnBgPrimary"
-    (click)="emitEditInvoiceEvent()"
+    [label]="'Edit'"
+    [customStyle]="'bg-btnBgPrimary'"
+    (buttonEvent)="emitEditInvoiceEvent()"
   />
   <app-button
-    [text]="'Delete'"
-    class="rounded-full bg-redPrimary"
-    (click)="deleteInvoice()"
+    [label]="'Delete'"
+    [customStyle]="'bg-redPrimary'"
+    (buttonEvent)="deleteInvoice()"
   />
-  @if (isPending) {
+  @if (isInvoicePending) {
     <app-button
-      [text]="'Mark as paid'"
-      class="rounded-full bg-purplePrimary"
-      (click)="emitMarkAsPaidEvent()"
+      [label]="'Mark as paid'"
+      [customStyle]="'bg-purplePrimary'"
+      (buttonEvent)="emitMarkAsPaidEvent()"
     />
   }
 </div>

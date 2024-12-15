@@ -9,7 +9,7 @@ import { DialogService } from "../../../services/dialog.service";
   templateUrl: "./action-buttons.component.html",
 })
 export class ActionButtonsComponent {
-  @Input() isPending: boolean = false; // is invoice status === pending
+  @Input() isInvoicePending: boolean = false;
   @Input() invoiceId!: string;
   @Output() editInvoiceEvent = new EventEmitter();
   @Output() markAsPaidEvent = new EventEmitter();
