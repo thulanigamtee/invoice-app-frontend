@@ -90,7 +90,7 @@ export class InvoiceComponent implements OnInit, OnDestroy {
             );
           },
           error: () => {
-            this.invoice.status = "pending"; // revert back if error occurs
+            this.invoice.status = "pending";
           },
         });
     }
