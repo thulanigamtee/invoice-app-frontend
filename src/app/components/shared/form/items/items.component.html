@@ -39,16 +39,18 @@
           class="w-[20%] bg-transparent md:w-[15%]"
         />
         <app-button
-          [text]="''"
-          class="bg-[url('/assets/icon-delete.svg')] bg-center bg-no-repeat"
-          (click)="removeItem($index)"
+          [label]="''"
+          [customStyle]="
+            'bg-[url(/assets/icon-delete.svg)] bg-center bg-no-repeat'
+          "
+          (buttonEvent)="removeItem($index)"
         />
       </div>
     }
     <app-button
-      [text]="'+ add new item'"
-      class="mt-10 block w-full rounded-full bg-btnBgPrimary text-center"
-      (click)="addItem()"
+      [label]="'+ add new item'"
+      [customStyle]="'mt-10 block w-full bg-btnBgPrimary text-center'"
+      (buttonEvent)="addItem()"
     />
   </div>
 </div>
