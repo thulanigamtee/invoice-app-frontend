@@ -24,7 +24,7 @@
             <app-status-indicator [status]="invoice.status" />
           </div>
           <app-action-buttons
-            [isPending]="invoice.status === 'pending' ? true : false"
+            [isInvoicePending]="invoice.status === 'pending' ? true : false"
             class="hidden md:block"
             (editInvoiceEvent)="loadInvoice()"
             (markAsPaidEvent)="markAsPaid()"
@@ -36,7 +36,7 @@
       </section>
       <section class="mt-16 bg-itemsBgPrimary px-[5%] py-6 md:hidden">
         <app-action-buttons
-          [isPending]="invoice.status === 'pending' ? true : false"
+          [isInvoicePending]="invoice.status === 'pending' ? true : false"
           (editInvoiceEvent)="loadInvoice()"
           (markAsPaidEvent)="markAsPaid()"
         />
