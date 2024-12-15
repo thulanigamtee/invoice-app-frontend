@@ -1,5 +1,7 @@
 <button
+  (click)="emitButtonEvent()"
+  [class]="customStyle"
   class="font-leagueSpartan h-[48px] gap-x-2 whitespace-nowrap rounded-full px-4 font-bold capitalize text-white md:h-[48px] md:px-5"
 >
-  {{ text }}
+  {{ label }}
 </button>
