@@ -50,7 +50,7 @@ export class FormComponent implements OnInit, OnDestroy {
     this.formService.isEditMode$.pipe(takeUntil(this.destroy$)).subscribe({
       next: (mode) => (this.isEditMode = mode),
     });
-    this.formService.isActive$.pipe(takeUntil(this.destroy$)).subscribe({
+    this.formService.form$.pipe(takeUntil(this.destroy$)).subscribe({
       next: (state) => (this.formState = state),
     });
     if (!this.isEditMode) {
