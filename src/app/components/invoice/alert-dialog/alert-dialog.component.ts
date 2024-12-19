@@ -5,6 +5,7 @@ import { DialogService } from "../../../services/dialog.service";
 import { Router } from "@angular/router";
 import { Subject, takeUntil } from "rxjs";
 import { ToastService } from "../../../services/toast.service";
+import { OverlayService } from "../../../services/overlay.service";
 
 @Component({
   selector: "app-alert-dialog",
@@ -21,6 +22,7 @@ export class AlertDialogComponent implements OnInit, OnDestroy {
     private invoiceService: InvoiceService,
     private dialogService: DialogService,
     private toastService: ToastService,
+    private overlayService: OverlayService,
     private router: Router,
   ) {}
 
@@ -32,6 +34,7 @@ export class AlertDialogComponent implements OnInit, OnDestroy {
 
   cancelDeletion() {
     this.dialogService.dialogState = false;
+    this.overlayService.overlayState = false;
   }
 
   confirmDeletion() {
@@ -41,6 +44,7 @@ export class AlertDialogComponent implements OnInit, OnDestroy {
       .subscribe({
         next: () => {
           this.dialogService.dialogState = false;
+          this.overlayService.overlayState = false;
           this.toastService.displayToastMessage("Invoice successfully deleted");
           this.router.navigate(["/"]);
         },
