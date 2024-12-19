@@ -12,6 +12,7 @@ import { Subject, takeUntil } from "rxjs";
 import { ToastService } from "../../services/toast.service";
 import { LoaderComponent } from "../../components/shared/loader/loader.component";
 import { FormService } from "../../services/form.service";
+import { OverlayService } from "../../services/overlay.service";
 
 @Component({
   selector: "app-invoice",
@@ -39,6 +40,7 @@ export class InvoiceComponent implements OnInit, OnDestroy {
     private invoiceService: InvoiceService,
     private toastService: ToastService,
     private formService: FormService,
+    private overlayService: OverlayService,
   ) {}
 
   ngOnInit() {

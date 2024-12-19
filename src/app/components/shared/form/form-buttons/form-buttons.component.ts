@@ -6,6 +6,7 @@ import { InvoiceService } from "../../../../services/invoice.service";
 import { Subject, takeUntil } from "rxjs";
 import { ToastService } from "../../../../services/toast.service";
 import { Invoice } from "../../../../interfaces/invoice.interface";
+import { OverlayService } from "../../../../services/overlay.service";
 
 @Component({
   selector: "app-form-buttons",
@@ -23,6 +24,7 @@ export class FormButtonsComponent implements OnInit {
     private formService: FormService,
     private invoiceService: InvoiceService,
     private toastService: ToastService,
+    private overlayService: OverlayService,
   ) {}
 
   ngOnInit() {
@@ -40,6 +42,7 @@ export class FormButtonsComponent implements OnInit {
       document.body.classList.remove("no-scroll");
       this.form.reset();
     }
+    this.overlayService.overlayState = false;
   }
 
   createInvoice() {
@@ -101,6 +104,7 @@ export class FormButtonsComponent implements OnInit {
             this.toastService.displayToastMessage(
               "Invoice successfully updated",
             );
+            this.overlayService.overlayState = false;
           },
           error: () => {
             this.toastService.message = "Error updating invoice";
@@ -110,6 +114,7 @@ export class FormButtonsComponent implements OnInit {
   }
 
   saveAsDraft() {
+    this.overlayService.overlayState = false;
     this.form.get("status")?.setValue("draft");
     this.invoiceService
       .createInvoice(this.form.value)
@@ -119,6 +124,7 @@ export class FormButtonsComponent implements OnInit {
           this.updateInvoices(draftInvoice);
           this.toastService.displayToastMessage("Draft successfully created");
           this.form.reset();
+          this.overlayService.overlayState = false;
         },
         error: () => {
           this.toastService.message = "Error creating invoice";
