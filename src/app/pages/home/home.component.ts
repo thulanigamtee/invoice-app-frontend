@@ -6,6 +6,7 @@ import { FormService } from "../../services/form.service";
 import { BreakpointObserverService } from "../../services/breakpointObserver.service";
 import { InvoiceService } from "../../services/invoice.service";
 import { Subject, takeUntil } from "rxjs";
+import { OverlayService } from "../../services/overlay.service";
 
 @Component({
   selector: "app-home",
@@ -25,6 +26,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private breakpointObserverService: BreakpointObserverService,
     private formService: FormService,
     private invoiceService: InvoiceService,
+    private overlayService: OverlayService,
   ) {}
 
   ngOnInit() {
@@ -63,6 +65,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   showForm() {
     this.formService.formState = true;
     this.formService.isEditMode = false;
+    this.overlayService.overlayState = true;
     document.body.classList.add("no-scroll");
   }
 
