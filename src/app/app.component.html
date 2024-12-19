@@ -1,6 +1,11 @@
 <div class="lg:w-full">
   <app-sidebar />
   <app-toast />
+  @if (isOverlayActive) {
+    <div
+      class="fixed left-0 top-0 z-10 h-full w-full bg-black bg-opacity-50 backdrop-blur-sm"
+    ></div>
+  }
   <div [@routeAnimations]="getRouteAnimationData(outlet)">
     <router-outlet #outlet="outlet" />
   </div>
