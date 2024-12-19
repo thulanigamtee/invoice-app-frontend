@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { ButtonComponent } from "../../shared/button/button.component";
 import { DialogService } from "../../../services/dialog.service";
+import { OverlayService } from "../../../services/overlay.service";
 
 @Component({
   selector: "app-action-buttons",
@@ -22,9 +23,13 @@ export class ActionButtonsComponent {
     this.markAsPaidEvent.emit();
   }
 
-  constructor(private dialogService: DialogService) {}
+  constructor(
+    private dialogService: DialogService,
+    private overlayService: OverlayService,
+  ) {}
 
   deleteInvoice() {
     this.dialogService.dialogState = true;
+    this.overlayService.overlayState = true;
   }
 }
