@@ -9,33 +9,33 @@ import { Invoice } from "../interfaces/invoice.interface";
 export class InvoiceService {
   private apiUrl = "http://localhost:8080/invoices";
 
-  private _invoicesCount = new BehaviorSubject<number>(0);
-  invoicesCount$ = this._invoicesCount.asObservable();
+  private invoicesCountSubject = new BehaviorSubject<number>(0);
+  invoicesCount$ = this.invoicesCountSubject.asObservable();
 
-  private _invoices = new BehaviorSubject<Invoice[]>([]);
-  invoices$ = this._invoices.asObservable();
+  private invoicesSubject = new BehaviorSubject<Invoice[]>([]);
+  invoices$ = this.invoicesSubject.asObservable();
 
-  private _invoice = new BehaviorSubject<any>({});
-  invoice$ = this._invoice.asObservable();
+  private invoiceSubject = new BehaviorSubject<any>({});
+  invoice$ = this.invoiceSubject.asObservable();
 
   private statusCount = new BehaviorSubject<number>(0);
   statusCount$ = this.statusCount.asObservable();
 
-  private _isFiltered = new BehaviorSubject<boolean>(false);
-  isFiltered$ = this._isFiltered.asObservable();
+  private isFilteredSubject = new BehaviorSubject<boolean>(false);
+  isFiltered$ = this.isFilteredSubject.asObservable();
 
-  private _filterMessage = new BehaviorSubject<string>("");
-  filterMessage$ = this._filterMessage.asObservable();
+  private filterMessageSubject = new BehaviorSubject<string>("");
+  filterMessage$ = this.filterMessageSubject.asObservable();
 
-  private _isLoading = new BehaviorSubject<boolean>(true);
-  isLoading$ = this._isLoading.asObservable();
+  private isLoadingSubject = new BehaviorSubject<boolean>(true);
+  isLoading$ = this.isLoadingSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
   getInvoices(status?: "draft" | "pending" | "paid"): Observable<Invoice[]> {
     return this.http.get<Invoice[]>(`${this.apiUrl}`).pipe(
       tap((data) => {
-        this._invoicesCount.next(data.length);
+        this.invoicesCountSubject.next(data.length);
         this.statusCount.next(
           data.filter((invoice) => invoice.status === status).length,
         );
@@ -59,50 +59,50 @@ export class InvoiceService {
   }
 
   get invoicesCount() {
-    return this._invoicesCount.value;
+    return this.invoicesCountSubject.value;
   }
 
   set invoicesCount(count) {
-    this._invoicesCount.next(count);
+    this.invoicesCountSubject.next(count);
   }
 
   get invoices() {
-    return this._invoices.value;
+    return this.invoicesSubject.value;
   }
 
   set invoices(invoice) {
-    this._invoices.next(invoice);
+    this.invoicesSubject.next(invoice);
   }
 
   get invoice() {
-    return this._invoice.value;
+    return this.invoiceSubject.value;
   }
 
   set invoice(invoice) {
-    this._invoice.next(invoice);
+    this.invoiceSubject.next(invoice);
   }
 
   get isFiltered() {
-    return this._isFiltered.value;
+    return this.isFilteredSubject.value;
   }
 
   set isFiltered(value: boolean) {
-    this._isFiltered.next(value);
+    this.isFilteredSubject.next(value);
   }
 
   get filterMessage() {
-    return this._filterMessage.value;
+    return this.filterMessageSubject.value;
   }
 
   set filterMessage(message: string) {
-    this._filterMessage.next(message);
+    this.filterMessageSubject.next(message);
   }
 
   get isLoading() {
-    return this._isLoading.value;
+    return this.isLoadingSubject.value;
   }
 
   set isLoading(isLoading: boolean) {
-    this._isLoading.next(isLoading);
+    this.isLoadingSubject.next(isLoading);
   }
 }
