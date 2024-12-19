@@ -16,7 +16,7 @@ export class ToastComponent {
   constructor(private toastService: ToastService) {}
 
   ngOnInit() {
-    this.toastService.isActive$.pipe(takeUntil(this.destroy$)).subscribe({
+    this.toastService.toast$.pipe(takeUntil(this.destroy$)).subscribe({
       next: (state) => (this.toastState = state),
     });
     this.toastService.message$.pipe(takeUntil(this.destroy$)).subscribe({
