@@ -5,26 +5,26 @@ import { BehaviorSubject } from "rxjs";
   providedIn: "root",
 })
 export class ToastService {
-  private isActive = new BehaviorSubject<boolean>(false);
-  isActive$ = this.isActive.asObservable();
+  private toastSubject = new BehaviorSubject<boolean>(false);
+  toast$ = this.toastSubject.asObservable();
 
-  private _message = new BehaviorSubject<string>("");
-  message$ = this._message.asObservable();
+  private messageSubject = new BehaviorSubject<string>("");
+  message$ = this.messageSubject.asObservable();
 
   get toastState() {
-    return this.isActive.value;
+    return this.toastSubject.value;
   }
 
   set toastState(state: boolean) {
-    this.isActive.next(state);
+    this.toastSubject.next(state);
   }
 
   get message() {
-    return this._message.value;
+    return this.messageSubject.value;
   }
 
   set message(message: string) {
-    this._message.next(message);
+    this.messageSubject.next(message);
   }
 
   displayToastMessage(message: string) {
