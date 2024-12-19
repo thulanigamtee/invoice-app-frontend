@@ -17,6 +17,7 @@ import { FormButtonsComponent } from "./form-buttons/form-buttons.component";
 import { Invoice } from "../../../interfaces/invoice.interface";
 import { Subject, takeUntil } from "rxjs";
 import { FormDropDownComponent } from "./form-drop-down/form-drop-down.component";
+import { OverlayService } from "../../../services/overlay.service";
 
 @Component({
   selector: "app-form",
@@ -43,6 +44,7 @@ export class FormComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private formService: FormService,
     private invoiceService: InvoiceService,
+    private overlayService: OverlayService,
   ) {}
 
   ngOnInit() {
@@ -99,6 +101,7 @@ export class FormComponent implements OnInit, OnDestroy {
   loadInvoice(id: string) {
     this.formService.isEditMode = true;
     this.formService.formState = true;
+    this.overlayService.overlayState = true;
     document.body.classList.add("no-scroll");
     this.invoiceService
       .getInvoiceById(id)
