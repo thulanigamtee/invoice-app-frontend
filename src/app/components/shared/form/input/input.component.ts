@@ -1,12 +1,11 @@
+import { NgClass } from "@angular/common";
 import { Component, Input } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
-import { FormService } from "../../../../services/form.service";
-import { CommonModule } from "@angular/common";
 
 @Component({
   selector: "app-input",
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, NgClass],
   templateUrl: "./input.component.html",
 })
 export class InputComponent {

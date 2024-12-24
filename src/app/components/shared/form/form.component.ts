@@ -1,4 +1,3 @@
-import { CommonModule } from "@angular/common";
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import {
   FormArray,
@@ -23,7 +22,6 @@ import { OverlayService } from "../../../services/overlay.service";
   selector: "app-form",
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     ClientAddressComponent,
     SenderAddressComponent,

@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, RouterLink } from "@angular/router";
-import { CommonModule } from "@angular/common";
 import { InvoiceInfoComponent } from "../../components/invoice/invoice-info/invoice-info.component";
 import { StatusIndicatorComponent } from "../../components/shared/status-indicator/status-indicator.component";
 import { ActionButtonsComponent } from "../../components/invoice/action-buttons/action-buttons.component";
@@ -18,7 +17,6 @@ import { OverlayService } from "../../services/overlay.service";
   selector: "app-invoice",
   standalone: true,
   imports: [
-    CommonModule,
     InvoiceInfoComponent,
     StatusIndicatorComponent,
     ActionButtonsComponent,

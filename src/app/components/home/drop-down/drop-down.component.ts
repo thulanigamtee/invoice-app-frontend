@@ -1,4 +1,3 @@
-import { CommonModule } from "@angular/common";
 import {
   Component,
   EventEmitter,
@@ -9,11 +8,12 @@ import {
 import { OutsideClickDirective } from "../../../directives/outside-click.directive";
 import { BreakpointObserverService } from "../../../services/breakpointObserver.service";
 import { Subject, takeUntil } from "rxjs";
+import { NgClass } from "@angular/common";
 
 @Component({
   selector: "app-drop-down",
   standalone: true,
-  imports: [CommonModule, OutsideClickDirective],
+  imports: [NgClass, OutsideClickDirective],
   templateUrl: "./drop-down.component.html",
 })
 export class DropDownComponent implements OnInit, OnDestroy {

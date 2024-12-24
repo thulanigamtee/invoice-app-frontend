@@ -1,18 +1,19 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, Pipe } from "@angular/core";
 import { Invoice } from "../../../interfaces/invoice.interface";
-import { CommonModule } from "@angular/common";
 import { RouterLink } from "@angular/router";
 import { StatusIndicatorComponent } from "../../shared/status-indicator/status-indicator.component";
 import { InvoiceService } from "../../../services/invoice.service";
 import { NoInvoicesComponent } from "../no-invoices/no-invoices.component";
 import { LoaderComponent } from "../../shared/loader/loader.component";
 import { Subject, takeUntil } from "rxjs";
+import { CurrencyPipe, DatePipe } from "@angular/common";
 
 @Component({
   selector: "app-invoice-item",
   standalone: true,
   imports: [
-    CommonModule,
+    DatePipe,
+    CurrencyPipe,
     RouterLink,
     StatusIndicatorComponent,
     NoInvoicesComponent,

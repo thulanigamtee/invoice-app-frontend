@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable, tap } from "rxjs";
+import { BehaviorSubject, catchError, Observable, of, tap } from "rxjs";
 import { Invoice } from "../interfaces/invoice.interface";
 
 @Injectable({
